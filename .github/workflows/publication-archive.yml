@@ -1,0 +1,69 @@
+name: Archive or replay the published report
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        type: choice
+        options: [create, replay]
+        default: create
+        required: true
+      release_id:
+        description: Resume an incomplete draft release; blank creates a new one
+        type: string
+      index_asset_id:
+        description: Replay only - exact published archive index asset ID
+        type: string
+      index_bytes:
+        description: Replay only - exact archive index size
+        type: string
+      index_sha256:
+        description: Replay only - exact archive index SHA256
+        type: string
+permissions:
+  contents: write
+  actions: read
+jobs:
+  publication:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    env:
+      PYTHONPATH: src
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e .
+      - name: Prepare and record the full standard worker resources
+        run: python -m ebpf_discovery.resources_v6 --report work/reader-host-resources.json
+      - name: Fetch the exact original reader source for archive creation
+        if: inputs.mode == 'create'
+        run: git fetch --no-tags --depth=1 origin c4f066d7c067d5661c3d942aacadb25d3103820d
+      - name: Archive exact publications or replay without live Actions API
+        env:
+          MODE: ${{ inputs.mode }}
+          RELEASE_ID: ${{ inputs.release_id }}
+          INDEX_ASSET_ID: ${{ inputs.index_asset_id }}
+          INDEX_BYTES: ${{ inputs.index_bytes }}
+          INDEX_SHA256: ${{ inputs.index_sha256 }}
+        run: |
+          args=("$MODE")
+          if [[ -n "$RELEASE_ID" ]]; then args+=(--release-id "$RELEASE_ID"); fi
+          if [[ "$MODE" == replay ]]; then
+            args+=(--index-asset-id "$INDEX_ASSET_ID" --index-bytes "$INDEX_BYTES" --index-sha256 "$INDEX_SHA256")
+          fi
+          python -m ebpf_discovery.publication_archive "${args[@]}"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: publication-archive-proof-${{ github.run_id }}-attempt${{ github.run_attempt }}
+          path: |
+            work/reader-host-resources.json
+            work/publication-archive/proof.json
+            work/publication-archive/archive-index.json
+            work/publication-archive/reader/work/full108-results/literal-results.json
+            work/publication-archive/reader/work/full108-results/literal-rows.csv
+          retention-days: 90
+          compression-level: 6
+          if-no-files-found: warn

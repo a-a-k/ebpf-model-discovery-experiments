@@ -6,6 +6,12 @@ Petclinic and for OTel Demo with absent SDK traces. OTel with partial tracing
 requires a different combination of the available observations. The tested
 pipelines do not supply the missing Social Network models.
 
+For Social Network `compose_post`, the measured outcome is an HTTP ACK. Its
+historical unconditional MongoDB-write requirement is incorrect for that event.
+The [semantic correction](../results/semantic-correction.json) applies to the
+interpretation below; no corrected prospective forecast or durable-write claim
+has been validated.
+
 The evidence covers all 108 declared cases: three applications, three SDK
 coverage modes, four runtime treatments and three repetitions. All ten declared
 operations remain in the results. The 2,880 source/view rows reuse 360
@@ -118,10 +124,28 @@ Every raw-view database-down prediction is unknown. The network view contains
 outcomes. This is selective conditional evidence, not complete reconstruction
 of database dependencies. All OTel DB predictions remain unknown.
 
-Social Network compose acknowledges all 252 DB-down requests across its 36 cases,
-despite a direct database-down prediction of zero and unavailable model DB
-forecasts. An HTTP acknowledgement does not establish durable storage, the
-success of a database write, or a failed fault injection.
+Social Network compose acknowledges all 252 DB-down requests across its 36 cases.
+The historical direct database-down prediction of zero used an incorrect
+unconditional MongoDB-write requirement for this measured HTTP ACK. The pinned
+Lua client decodes but ignores a declared `ComposePost` service exception; the
+HTTP handler can return its success marker after that reply. This establishes
+a contract/oracle mismatch, not that every one of the 252 requests took that
+execution branch. The ACK measurements remain valid; they do not establish a
+successful MongoDB write, durability, or a failed fault injection.
+
+This DB error does not establish a change in the primary model-availability
+counts. Missing DB channels can be assumed satisfied in the primary replica-only
+forecast; missing interservice Thrift paths remain separate obstacles. The
+published counts still describe the historical contract and pinned pipelines.
+The full ACK contract, including its different exception paths, needs review
+before corrected model claims are made.
+
+The [semantic correction](../results/semantic-correction.json) preserves the
+original measurements and frozen predictions. Corrected forecasts have not been
+computed or independently validated. Applying a corrected contract to the known
+targets would be post-hoc analysis; a new prospective claim requires corrected
+forecasts frozen before fresh independent targets. The same outcome definition
+must apply to every compared method.
 
 All 36 OTel cases retain 20 records in each asynchronous phase: persisted in
 normal execution, pending while paused, and persisted after resumption and

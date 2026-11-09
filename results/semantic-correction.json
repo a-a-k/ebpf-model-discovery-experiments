@@ -1,0 +1,43 @@
+{
+  "kind": "outcome-semantics-erratum",
+  "original_result_sha256": "1153f70032bc36bbc1936e666c8338e0935c24d2c8553b64836e711c9005bf36",
+  "original_manifest_sha256": "23b73280cc0f6386bffe35a29b85fb903fddbdf905a20f61a6643944cdc691a6",
+  "original_cost_ledger_sha256": "198cd5825bea33567353afb5166d552c9a2df963b8f4a86628122de82a4cbf3e",
+  "affected_operation": {"system": "deathstarbench", "operation": "compose_post"},
+  "affected_case_operation_sets": 36,
+  "affected_source_view_rows": 288,
+  "measured_outcome": {
+    "id": "compose_post.http_ack",
+    "definition": "HTTP success and the Successfully upload post response marker",
+    "is_confirmed_mongodb_write": false,
+    "is_durability_evidence": false
+  },
+  "storage_outcome": {
+    "id": "compose_post.confirmed_mongodb_write",
+    "requires": "Independent evidence of the corresponding record in the selected store",
+    "infer_from_http_ack": false
+  },
+  "established_error": {
+    "historical_database_down_reference": 0.0,
+    "valid_as_an_unconditional_prediction_for_the_measured_ack": false,
+    "reason": "The pinned Lua client decodes but ignores a declared ComposePost ServiceException; the HTTP handler can acknowledge that response.",
+    "all_252_acknowledgements_proven_to_follow_this_branch": false
+  },
+  "primary_model_availability": {
+    "numeric_change_established": false,
+    "reason": "Missing database channels can be assumed satisfied in the primary replica-only forecast; missing interservice paths remain independent obstacles.",
+    "published_coverage_counts_rewritten": false
+  },
+  "analysis_status": {
+    "historical_observations_and_frozen_forecasts_modified": false,
+    "corrected_forecasts_computed": false,
+    "corrected_forecasts_prospectively_validated": false,
+    "reuse_of_existing_targets_for_corrected_contract": "post_hoc_analysis",
+    "requirements": "Apply any corrected outcome contract equally to native, eBPF, combined, context-union and direct methods; retain the original forecasts. A prospective claim requires independently collected targets after the corrected forecasts are frozen."
+  },
+  "source": {
+    "upstream_commit": "6ecb09706140f8730b5385c08f1386c654c3c526",
+    "lua_client_sha256": "a87343b39ee7743cfdc934cf63ad69d153ef2d184a184fce34574b6720588280",
+    "http_handler_sha256": "1f522cd716303686b19be62e201bd2caf8cfd0dfa7146cebf56cd50efdb5a441"
+  }
+}
