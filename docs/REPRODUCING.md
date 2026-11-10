@@ -93,6 +93,44 @@ This is reproduction of the published report from original metadata. It does
 not archive the complete raw-capture/model-build input closure or demonstrate
 rebuilding all models from scratch.
 
+### Permanent full-input archive
+
+The complete input archive is published separately from the fixed report
+archive. Its `full-input-index.json` records every resolved dependency of the
+108 canonical cases, including original artifact identity, producing run/job
+/attempt, source commit, Release asset/part identity, byte offsets and
+SHA-256. The index is authoritative by its asset ID and hash; `latest` is not
+used.
+
+Create or resume the archive (all large processing runs in Actions):
+
+```sh
+gh workflow run full-input-archive.yml --repo a-a-k/ebpf-model-discovery-experiments \
+  --ref archive/full-study-inputs -f mode=create
+```
+
+After the finalizer publishes the exact index asset, run the three-way
+verification workflow with the index asset ID, byte count and SHA-256, plus
+the fixed publication index identity above:
+
+```sh
+gh workflow run full-input-verification.yml \
+  --repo a-a-k/ebpf-model-discovery-experiments --ref archive/full-study-inputs \
+  -f index_id=INDEX_ASSET_ID -f index_bytes=INDEX_BYTES -f index_sha256=INDEX_SHA256 \
+  -f publication_index_asset_id=728317527 \
+  -f publication_index_bytes=213141 \
+  -f publication_index_sha256=d5294d00a5944789b2743ae1567cc7a9b4833af4069c1012e2953805541cd277
+```
+
+The verification workflow reads the full archive through `package_import`
+without Actions artifact downloads or historical Actions API requests, then
+replays all 108 published cases and the existing 36-case Social Network
+correction. Its receipts report the actual Release assets read and the
+forbidden-source request count, which must be zero. The archive worker uses
+lossless one-GiB parts, verifies every original ZIP and nested package, and
+records transfer retries and worker costs separately from the historical
+experiment.
+
 ### Original Actions publications
 
 While the original Actions artifacts remain available, repeat the original

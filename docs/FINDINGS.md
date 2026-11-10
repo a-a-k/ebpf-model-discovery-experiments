@@ -228,6 +228,14 @@ receipts. It supports report replay without live Actions API access. This tier
 does not preserve the complete raw-capture/model-build regeneration closure;
 replay agreement alone does not validate the corrected compose contract.
 
+The separate full-input archive workflow resolves that closure from the
+canonical 108-case dependencies and preserves the original ZIP bytes in
+one-GiB Release parts. Its final index and verification receipt are separate
+from this historical result record: they must report 108 resolved cases,
+zero forbidden Actions-artifact/API requests during replay, and the explicitly
+listed limited observation-to-model rebuild sample before archive-backed
+reproducibility is claimed.
+
 The [correction publication](../results/correction-publication.json) links all
 36 raw-backed target receipts, full archives or lossless parts, the original
 forecast barrier, and 85 permanent metadata ZIPs. Full classification arrays

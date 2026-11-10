@@ -1,0 +1,169 @@
+name: Preserve and read the complete study inputs
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        type: choice
+        options: [create, read]
+        default: create
+      index_id:
+        type: string
+      index_bytes:
+        type: string
+      index_sha256:
+        type: string
+permissions:
+  contents: write
+  actions: read
+env:
+  PYTHONPATH: src:.
+  PYTHONUNBUFFERED: '1'
+  GH_TOKEN: ${{ github.token }}
+jobs:
+  prepare:
+    if: inputs.mode == 'create'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    outputs:
+      release_id: ${{ steps.plan.outputs.release_id }}
+      plan_id: ${{ steps.plan.outputs.plan_id }}
+      plan_bytes: ${{ steps.plan.outputs.plan_bytes }}
+      plan_sha256: ${{ steps.plan.outputs.plan_sha256 }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e . opentelemetry-proto
+      - name: Prepare and record the full standard worker resources
+        run: python -m ebpf_discovery.resources_v6 --report work/archive-host-resources.json
+      - id: plan
+        name: Freeze original artifact inventory, producing jobs, source and shard boundaries
+        run: python -m ebpf_discovery.full_input_archive prepare
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: full-input-prepare-${{ github.run_id }}-attempt${{ github.run_attempt }}
+          path: |
+            work/archive-host-resources.json
+            work/full-input-archive/*.json
+          if-no-files-found: warn
+  format-check:
+    needs: prepare
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e . opentelemetry-proto
+      - run: python -m ebpf_discovery.resources_v6 --report work/archive-host-resources.json
+      - name: Archive and read actual package formats before the full transfer
+        run: >-
+          python -m ebpf_discovery.full_input_archive worker --shard 40
+          --release-id '${{ needs.prepare.outputs.release_id }}'
+          --plan-id '${{ needs.prepare.outputs.plan_id }}'
+          --plan-bytes '${{ needs.prepare.outputs.plan_bytes }}'
+          --plan-sha256 '${{ needs.prepare.outputs.plan_sha256 }}'
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: full-input-formats-${{ github.run_id }}-attempt${{ github.run_attempt }}
+          path: |
+            work/archive-host-resources.json
+            work/full-input-archive/*.json
+          if-no-files-found: warn
+  inputs:
+    needs: [prepare, format-check]
+    name: archive/read shard ${{ matrix.shard }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      max-parallel: 40
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e . opentelemetry-proto
+      - run: python -m ebpf_discovery.resources_v6 --report work/archive-host-resources.json
+      - name: Preserve original bytes and verify a fresh Release-only read
+        run: >-
+          python -m ebpf_discovery.full_input_archive worker --shard '${{ matrix.shard }}'
+          --release-id '${{ needs.prepare.outputs.release_id }}'
+          --plan-id '${{ needs.prepare.outputs.plan_id }}'
+          --plan-bytes '${{ needs.prepare.outputs.plan_bytes }}'
+          --plan-sha256 '${{ needs.prepare.outputs.plan_sha256 }}'
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: full-input-shard${{ matrix.shard }}-${{ github.run_id }}-attempt${{ github.run_attempt }}
+          path: |
+            work/archive-host-resources.json
+            work/full-input-archive/*.json
+          if-no-files-found: warn
+  close:
+    needs: [prepare, format-check, inputs]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    env:
+      FULL_ARCHIVE_PLAN_ID: ${{ needs.prepare.outputs.plan_id }}
+    outputs:
+      index_id: ${{ steps.close.outputs.index_id }}
+      index_bytes: ${{ steps.close.outputs.index_bytes }}
+      index_sha256: ${{ steps.close.outputs.index_sha256 }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e . opentelemetry-proto
+      - run: python -m ebpf_discovery.resources_v6 --report work/archive-host-resources.json
+      - id: close
+        name: Check all canonical closures and publish the complete input index
+        run: >-
+          python -m ebpf_discovery.full_input_archive finalize
+          --release-id '${{ needs.prepare.outputs.release_id }}'
+          --plan-id '${{ needs.prepare.outputs.plan_id }}'
+          --plan-bytes '${{ needs.prepare.outputs.plan_bytes }}'
+          --plan-sha256 '${{ needs.prepare.outputs.plan_sha256 }}'
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: full-input-close-${{ github.run_id }}-attempt${{ github.run_attempt }}
+          path: |
+            work/archive-host-resources.json
+            work/full-input-archive/*.json
+          if-no-files-found: warn
+  read:
+    needs: close
+    if: always() && (inputs.mode == 'read' || needs.close.result == 'success')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e . opentelemetry-proto
+      - run: python -m ebpf_discovery.resources_v6 --report work/archive-host-resources.json
+      - name: Restore actual model and shared packages through the existing import code
+        run: >-
+          python -m ebpf_discovery.full_input_archive import-check
+          --index-id '${{ inputs.mode == 'read' && inputs.index_id || needs.close.outputs.index_id }}'
+          --index-bytes '${{ inputs.mode == 'read' && inputs.index_bytes || needs.close.outputs.index_bytes }}'
+          --index-sha256 '${{ inputs.mode == 'read' && inputs.index_sha256 || needs.close.outputs.index_sha256 }}'
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: full-input-import-${{ github.run_id }}-attempt${{ github.run_attempt }}
+          path: |
+            work/archive-host-resources.json
+            work/full-input-archive/*.json
+          if-no-files-found: warn
