@@ -20,7 +20,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: capture-publication-fixture-${{ github.run_id }}
-          path: work/capture-publication-fixture/**/target-*.tar.gz*
+          path: |
+            work/capture-publication-fixture/**/target-*.tar.gz*
+            !work/capture-publication-fixture/*current/**
           include-hidden-files: true
           compression-level: 0
           if-no-files-found: error
