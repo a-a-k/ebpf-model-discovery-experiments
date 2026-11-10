@@ -1,0 +1,28 @@
+name: Archive completed correction metadata and results
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+env:
+  PYTHONPATH: src
+  PYTHONUNBUFFERED: '1'
+  GH_TOKEN: ${{ github.token }}
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e . opentelemetry-proto
+      - name: Verify completed receipts and retain all metadata with finite costs
+        run: python -m ebpf_discovery.compose_ack_publication
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: correction-publication-${{ github.run_id }}-attempt${{ github.run_attempt }}
+          path: work/ack-publication/*.json
+          if-no-files-found: warn
