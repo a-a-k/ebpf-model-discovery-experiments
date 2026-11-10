@@ -3,7 +3,10 @@
   "original_result_sha256": "1153f70032bc36bbc1936e666c8338e0935c24d2c8553b64836e711c9005bf36",
   "original_manifest_sha256": "23b73280cc0f6386bffe35a29b85fb903fddbdf905a20f61a6643944cdc691a6",
   "original_cost_ledger_sha256": "198cd5825bea33567353afb5166d552c9a2df963b8f4a86628122de82a4cbf3e",
-  "affected_operation": {"system": "deathstarbench", "operation": "compose_post"},
+  "affected_operation": {
+    "system": "deathstarbench",
+    "operation": "compose_post"
+  },
   "affected_case_operation_sets": 36,
   "affected_source_view_rows": 288,
   "measured_outcome": {
@@ -21,23 +24,41 @@
     "historical_database_down_reference": 0.0,
     "valid_as_an_unconditional_prediction_for_the_measured_ack": false,
     "reason": "The pinned Lua client decodes but ignores a declared ComposePost ServiceException; the HTTP handler can acknowledge that response.",
-    "all_252_acknowledgements_proven_to_follow_this_branch": false
+    "all_252_acknowledgements_proven_to_follow_this_branch": false,
+    "corrected_direct_conditional_database_down_reference": 1.0
   },
   "primary_model_availability": {
     "numeric_change_established": false,
-    "reason": "Missing database channels can be assumed satisfied in the primary replica-only forecast; missing interservice paths remain independent obstacles.",
-    "published_coverage_counts_rewritten": false
+    "reason": "The corrected prospective evaluation retains 0/3 pure-eBPF operations for each collector, SDK mode and repetition; missing observed Thrift paths remain independent obstacles.",
+    "published_coverage_counts_rewritten": false,
+    "corrected_counts_same_as_historical": true
   },
   "analysis_status": {
     "historical_observations_and_frozen_forecasts_modified": false,
-    "corrected_forecasts_computed": false,
-    "corrected_forecasts_prospectively_validated": false,
+    "corrected_forecasts_computed": true,
     "reuse_of_existing_targets_for_corrected_contract": "post_hoc_analysis",
-    "requirements": "Apply any corrected outcome contract equally to native, eBPF, combined, context-union and direct methods; retain the original forecasts. A prospective claim requires independently collected targets after the corrected forecasts are frozen."
+    "requirements": "Apply any corrected outcome contract equally to native, eBPF, combined, context-union and direct methods; retain the original forecasts. A prospective claim requires independently collected targets after the corrected forecasts are frozen.",
+    "corrected_forecasts_prospectively_evaluated": true,
+    "all_available_primary_forecasts_agree_with_outcomes": false,
+    "prospective_evaluation": "36 fresh raw-backed cases; 108 operation outcome sets; 864 source/view rows; all misses and unavailable database forecasts retained."
   },
   "source": {
     "upstream_commit": "6ecb09706140f8730b5385c08f1386c654c3c526",
     "lua_client_sha256": "a87343b39ee7743cfdc934cf63ad69d153ef2d184a184fce34574b6720588280",
     "http_handler_sha256": "1f522cd716303686b19be62e201bd2caf8cfd0dfa7146cebf56cd50efdb5a441"
+  },
+  "prospective_correction": {
+    "report": "results/correction-publication.json",
+    "report_sha256": "d69134c8bf4bc617d3ab5fbe8146617277c7b62cd425801a9c9a8b3928b57f44",
+    "forecast_run_id": 42685277599,
+    "target_run_id": 42769442057,
+    "fresh_cases": 36,
+    "primary_requests": 345600,
+    "database_down_requests": 720,
+    "compose_ack_database_down_successes": 252,
+    "graph_database_down_forecasts_available": 0,
+    "first_attempt_aggregates_retained_but_raw_missing": 36,
+    "replacement_technical_retries": 0,
+    "write_or_durability_claim": false
   }
 }

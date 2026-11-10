@@ -58,6 +58,16 @@ jobs:
       - run: python -m pytest --import-mode=importlib tests systems
         env:
           PYTHONPATH: .
+      - name: Replay correction statistics and archived metadata without Actions API access
+        run: python scripts/check-compose-correction-replay.py
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: correction-report-replay-${{ github.run_id }}-attempt${{ github.run_attempt }}
+          path: work/correction-report-replay/receipt.json
+          if-no-files-found: warn
   control-fixture-v5:
     runs-on: ubuntu-24.04
     timeout-minutes: 360

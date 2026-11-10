@@ -1,0 +1,30 @@
+{
+  "kind": "correction-delivery-provenance",
+  "report": {
+    "path": "results/correction-publication.json",
+    "bytes": 1853057,
+    "sha256": "d69134c8bf4bc617d3ab5fbe8146617277c7b62cd425801a9c9a8b3928b57f44",
+    "asset_id": 730638120
+  },
+  "summary": {
+    "asset_id": 730603417,
+    "bytes": 10530719,
+    "sha256": "d772bd51c199397f5b5d2aaa623d255946cbaf6541b7955ab74a145eaac2a345"
+  },
+  "forecast_run": 42685277599,
+  "replacement_run": 42769442057,
+  "replacement_conclusion": "success",
+  "publication_run": 42780232966,
+  "publication_conclusion": "success",
+  "failed_publication_run_retained_in_costs": 42779182295,
+  "all_36_raw_captures_persisted": true,
+  "archived_metadata_ZIPs": 85,
+  "old_forecast_release_public": 439556136,
+  "target_release_public": 440020384,
+  "original_result_sha256": "1153f70032bc36bbc1936e666c8338e0935c24d2c8553b64836e711c9005bf36",
+  "original_manifest_sha256": "23b73280cc0f6386bffe35a29b85fb903fddbdf905a20f61a6643944cdc691a6",
+  "original_cost_ledger_sha256": "198cd5825bea33567353afb5166d552c9a2df963b8f4a86628122de82a4cbf3e",
+  "this_delivery_and_CI_outside_publication_cost_cut_are_not_zero": true,
+  "human_seconds": null,
+  "complete_comparable_cost_comparison": false
+}
