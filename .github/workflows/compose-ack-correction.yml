@@ -126,12 +126,17 @@ jobs:
           if-no-files-found: warn
       - name: Preserve a failed publication working archive for technical retry
         if: failure()
+        run: >-
+          python -m ebpf_discovery.compose_ack_repair preserve
+          --mode '${{ matrix.mode }}' --repetition '${{ matrix.repetition }}'
+          --collector '${{ matrix.collector }}'
+      - name: Upload safe outer containers for technical retry
+        if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: ack-correction-failed-prefix-${{ matrix.mode }}-${{ matrix.repetition }}-${{ matrix.collector }}-${{ github.run_id }}-attempt${{ github.run_attempt }}
           path: |
             work/ack-correction/target-*.tar.gz*
-            work/ack-correction/capture/
           include-hidden-files: true
           compression-level: 0
           if-no-files-found: warn

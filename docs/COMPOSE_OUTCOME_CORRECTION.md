@@ -67,8 +67,21 @@ The workflow uses full standard workers and 360-minute limits. The target matrix
 allows all 36 workers; GitHub applies the account's actual available concurrency.
 Large source bodies stay in Actions. New freezes, raw target archives and result
 receipts are verified into a Release. An oversized raw archive is losslessly
-split; a publication failure retains the owned capture and archive for recovery
-without changing completed measurements.
+split. Publication recovery uploads only safe outer TAR containers, with all
+original Linux filenames retained inside them.
+
+The first correction run completed all 36 measurements and saved their 864
+derived rows, but lost the raw captures: the target archive used a model-only
+packing option, and the fallback rejected an upstream filename containing `*`.
+Those aggregates and all failed-worker costs remain historical evidence; they
+are not independently replayable raw captures. The fixed recovery repeats all 36
+target cases against the exact nine forecasts and original barrier registered
+in [the frozen input manifest](compose-ack-frozen-inputs.json). It does not
+rediscover, recompile or refit models. All cases were selected for replacement
+because of missing raw publications, before inspecting forecast accuracy.
+Current recovery source/run identities are recorded separately from the original
+forecast source/run. An actual publication fixture checks safe container delivery
+with `*` inside the TAR and a forced publication failure before measurements.
 
 Costs include the original reused preparation/models and new source/CI/review,
 imports, predicate compilation, simulation, fresh guests, collectors, traffic,
