@@ -44,7 +44,9 @@ def interval_seconds(job):
 
 def cost_census(github):
     ids = set(PRIOR_RUNS) | {TARGET_RUN}
-    extra = github.pages('actions/workflows/checks.yml/runs?branch=report/ack-correction-publication', 'workflow_runs')
+    extra = []
+    for branch in ('report/ack-correction-publication', 'fix/ack-cost-unknown-intervals'):
+        extra += github.pages('actions/workflows/checks.yml/runs?branch=' + branch, 'workflow_runs')
     extra += github.pages('actions/workflows/checks.yml/runs?head_sha=' + os.environ['GITHUB_SHA'], 'workflow_runs')
     ids.update(r['id'] for r in extra if r['path'] == '.github/workflows/checks.yml')
     rows, executions, unknown = [], {}, []
