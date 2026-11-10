@@ -15,11 +15,10 @@ import os
 from pathlib import Path
 import re
 import shutil
-import subprocess
+import stat
+import tarfile
 import time
 import zipfile
-
-import requests
 
 from . import block_v6 as b
 from . import compose_ack_contract as contract
@@ -128,7 +127,7 @@ def make_zip(folder, target):
                 archive.write(path, path.relative_to(folder).as_posix())
 
 
-def read_freeze(path, expected_block, *, source=None):
+def read_freeze(path, expected_block, *, source=None, run_id=None):
     with zipfile.ZipFile(path) as archive:
         value = json.loads(archive.read('freeze.json'))
         require(value['key'] == expected_block['key'] and value['plan_sha256'] == file_digest(PLAN) and
@@ -136,7 +135,7 @@ def read_freeze(path, expected_block, *, source=None):
                 set(value['arms']) == set(ARMS), 'foreign/incomplete corrected freeze')
         if source:
             require(value['execution_source'] == source, 'corrected freeze implementation differs')
-        require(value['execution_run_id'] == os.environ['GITHUB_RUN_ID'], 'foreign correction run')
+        require(value['execution_run_id'] == str(run_id or os.environ['GITHUB_RUN_ID']), 'foreign correction run')
         names = archive.namelist()
         require(len(names) == len(set(names)) and set(names) == {'freeze.json', *value['files']}, 'freeze member set differs')
         for name, identity in value['files'].items():
@@ -154,11 +153,12 @@ def prepare(github, root):
     plan = record()
     marker = 'ACK-correction-plan-sha256: ' + file_digest(PLAN)
     tag = 'compose-ack-correction-' + os.environ['GITHUB_RUN_ID']
-    try:
-        info = github.json('releases/tags/' + tag)
-    except requests.HTTPError as error:
-        if error.response.status_code != 404:
-            raise
+    # Draft releases are not returned by the tag endpoint, even to the owner.
+    matches = [r for r in github.pages('releases') if r['tag_name'] == tag]
+    require(len(matches) <= 1, 'ambiguous owned correction release')
+    if matches:
+        info = matches[0]
+    else:
         info = github.request('POST', 'releases', json={
             'tag_name': tag, 'target_commitish': os.environ['GITHUB_SHA'], 'draft': True,
             'name': 'Prospective correction of the Social Network ACK contract',
@@ -167,7 +167,9 @@ def prepare(github, root):
     release = Release(github, info['id'])
     bundle = root / 'registered-inputs.zip'
     sources = (PLAN.as_posix(), 'src/ebpf_discovery/compose_ack_contract.py',
-               'src/ebpf_discovery/compose_ack_repair.py', '.github/workflows/compose-ack-correction.yml')
+               'src/ebpf_discovery/compose_ack_repair.py', '.github/workflows/compose-ack-correction.yml',
+               'src/ebpf_discovery/compose_ack_recovery.py', 'docs/compose-ack-frozen-inputs.json',
+               '.github/workflows/compose-ack-correction-recovery.yml')
     if bundle.name in release.assets:
         download_asset(github, release.assets[bundle.name], bundle)
         with zipfile.ZipFile(bundle) as archive:
@@ -318,18 +320,27 @@ def project_targets(forecasts, direct, records, status):
 
 
 def validate(github, release, root, plan, block, arm, args):
+    forecast_source, forecast_run = os.environ['GITHUB_SHA'], os.environ['GITHUB_RUN_ID']
+    if args.reuse_frozen_inputs:
+        from .compose_ack_recovery import frozen_inputs
+        origin = frozen_inputs()
+        forecast_source, forecast_run = origin['forecast_source'], str(origin['forecast_run_id'])
+        expected_barrier = origin['barrier_asset']
+        require((args.barrier_asset_id, args.barrier_bytes, args.barrier_sha256) ==
+                (expected_barrier['id'], expected_barrier['size'], expected_barrier['digest'][7:]),
+                'recovery must use the exact registered original barrier')
     barrier_path = root / 'all-nine-blocks-frozen.json'
     github.download(f'releases/assets/{args.barrier_asset_id}', barrier_path, args.barrier_bytes, args.barrier_sha256)
     all_frozen = b.read(barrier_path)
-    require(all_frozen['plan_sha256'] == file_digest(PLAN) and all_frozen['execution_source'] == os.environ['GITHUB_SHA'] and
-            all_frozen['execution_run_id'] == os.environ['GITHUB_RUN_ID'] and
+    require(all_frozen['plan_sha256'] == file_digest(PLAN) and all_frozen['execution_source'] == forecast_source and
+            all_frozen['execution_run_id'] == forecast_run and
             all_frozen['all_36_forecasts_before_any_target'] is True and len(all_frozen['blocks']) == 9 and
             {tuple(r['key']) for r in all_frozen['blocks']} == {tuple(b['key']) for b in plan['blocks']},
             'qualified all36 prospective barrier required')
     row = next(r for r in all_frozen['blocks'] if r['key'] == block['key'])
     frozen_zip = root / row['asset']['name']
     download_asset(github, row['asset'], frozen_zip)
-    frozen = read_freeze(frozen_zip, block, source=os.environ['GITHUB_SHA'])
+    frozen = read_freeze(frozen_zip, block, source=forecast_source, run_id=forecast_run)
     require(row['saved_ns'] == frozen['saved_ns'], 'barrier and selected freeze time differ')
     with zipfile.ZipFile(frozen_zip) as archive:
         forecasts = json.loads(archive.read(arm + '/forecasts.json'))
@@ -383,6 +394,7 @@ def validate(github, release, root, plan, block, arm, args):
                         if k not in ('class_test_assignments', 'target_descriptive_assignments')}
     result.update(freeze_asset=row['asset'], all36_barrier={'asset_id': args.barrier_asset_id,
                   'bytes': args.barrier_bytes, 'sha256': args.barrier_sha256},
+                  forecast_execution_source=forecast_source, forecast_execution_run_id=forecast_run,
                   original_model=block['arms'][arm], fresh_guest_lifecycle=commands,
                   frozen_classification_applied_without_refit=class_projection,
                   classification_array_omissions=omitted,
@@ -423,14 +435,71 @@ def publish_raw(release, path, *, max_asset_bytes=2 * 1024**3, chunk_bytes=1024*
             'chunks_manifest_asset': asset_identity(release.publish(manifest))}
 
 
+def pack_capture(evidence, raw):
+    """Archive regular capture files with a reserve checked on compressed writes."""
+    evidence, raw = Path(evidence), Path(raw)
+    b.owned_root(evidence)
+    b.owned_root(raw.parent)
+    require(re.fullmatch(r'target-[a-z]+-[0-9]+-[a-z]+-attempt[0-9]+\.tar\.gz', raw.name),
+            'only an owned target capture archive is permitted')
+    inventory = raw.with_name(raw.name + '.json')
+    require(not raw.exists() and not inventory.exists(), 'never replace a capture archive')
+    files = {p.relative_to(evidence).as_posix() for p in evidence.rglob('*')
+             if p.is_file() and not p.is_symlink()}
+    guard = b.capacity(raw.parent, 0)
+    guard.update(budget='actual compressed capture writes',
+                 minimum_free_before_write_bytes=guard['free_bytes'], compressed_bytes_written=0)
+    partial = raw.with_name(raw.name + '.partial')
+    with partial.open('xb', buffering=0) as stream:
+        writer = b.CompressedModelWriter(stream, raw.parent, guard)
+        with tarfile.open(fileobj=writer, mode='w:gz', compresslevel=1) as archive:
+            for name in sorted(files):
+                path = evidence / name
+                require(not path.is_symlink() and path.is_file(), 'capture member changed type')
+                archive.add(path, arcname=name, recursive=False)
+    identities = {name: {'bytes': (evidence / name).stat().st_size,
+                         'sha256': file_digest(evidence / name),
+                         'mode': stat.S_IMODE((evidence / name).stat().st_mode)} for name in files}
+    # Check the actual delivered members, including legal names such as '*'.
+    with tarfile.open(partial, 'r:gz') as archive:
+        members = archive.getmembers()
+        require(len(members) == len(identities) and {m.name for m in members} == set(identities),
+                'capture archive member census differs')
+        for member in members:
+            with archive.extractfile(member) as source:
+                require(hashlib.file_digest(source, 'sha256').hexdigest() == identities[member.name]['sha256'] and
+                        member.size == identities[member.name]['bytes'], 'capture archive member differs')
+    require(not raw.exists(), 'capture archive destination already exists')
+    partial.rename(raw)
+    guard['free_bytes_after_close'] = shutil.disk_usage(raw.parent).free
+    write_json(inventory, {'bytes': raw.stat().st_size, 'sha256': file_digest(raw),
+                          'prepack_actual_disk_guard': guard, 'files': identities, 'directories': []})
+
+
+def target_archive(root, args):
+    stem = f"target-{args.mode}-{args.repetition}-{args.collector}-attempt{os.environ['GITHUB_RUN_ATTEMPT']}"
+    return Path(root) / (stem + '.tar.gz')
+
+
+def preserve_target(root, args):
+    """Safe outer files only; upstream names are kept inside the TAR container."""
+    raw = target_archive(root, args)
+    evidence = Path(root) / 'capture'
+    if evidence.exists() and not raw.exists():
+        pack_capture(evidence, raw)
+    if raw.exists():
+        inventory = b.read(raw.with_name(raw.name + '.json'))
+        require(raw.stat().st_size == inventory['bytes'] and file_digest(raw) == inventory['sha256'],
+                'fallback capture archive identity differs')
+    return raw
+
+
 def publish_target(release, root, args, error):
     stem = f"target-{args.mode}-{args.repetition}-{args.collector}-attempt{os.environ['GITHUB_RUN_ATTEMPT']}"
     evidence = root / 'capture'
     raw_data = None
     if evidence.exists():
-        raw = root / (stem + '.tar.gz')
-        paths = {p.relative_to(evidence).as_posix() for p in evidence.rglob('*') if p.is_file() and not p.is_symlink()}
-        b.pack(evidence, raw, paths, guard_compressed_writes=True)
+        raw = preserve_target(root, args)
         raw_data = publish_raw(release, raw)
         release.publish(raw.with_name(raw.name + '.json'))
     receipt = {'mode': args.mode, 'repetition': args.repetition, 'collector': args.collector,
@@ -529,7 +598,7 @@ def summarize(github, release, root, plan):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('command', choices=('prepare', 'freeze', 'barrier', 'validate', 'summarize'))
+    parser.add_argument('command', choices=('prepare', 'freeze', 'barrier', 'validate', 'summarize', 'preserve'))
     parser.add_argument('--release-id', type=int)
     parser.add_argument('--mode', choices=('absent', 'partial', 'full'))
     parser.add_argument('--repetition', type=int, choices=(9, 10, 11))
@@ -537,6 +606,7 @@ def main():
     parser.add_argument('--barrier-asset-id', type=int)
     parser.add_argument('--barrier-bytes', type=int)
     parser.add_argument('--barrier-sha256')
+    parser.add_argument('--reuse-frozen-inputs', action='store_true')
     args = parser.parse_args()
     plan = record()
     root = Path('work/ack-correction').resolve()
@@ -546,7 +616,9 @@ def main():
     error = None
     release = None
     try:
-        if args.command == 'prepare':
+        if args.command == 'preserve':
+            preserve_target(root, args)
+        elif args.command == 'prepare':
             prepare(github, root)
         else:
             require(args.release_id, 'exact correction Release required')

@@ -1,0 +1,107 @@
+name: Recover Social Network validation on unchanged forecasts
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+env:
+  PYTHONPATH: src
+  PYTHONUNBUFFERED: '1'
+  GH_TOKEN: ${{ github.token }}
+jobs:
+  prepare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    outputs:
+      release_id: ${{ steps.prepare.outputs.release_id }}
+      target_matrix: ${{ steps.prepare.outputs.target_matrix }}
+      barrier_asset_id: ${{ steps.prepare.outputs.barrier_asset_id }}
+      barrier_bytes: ${{ steps.prepare.outputs.barrier_bytes }}
+      barrier_sha256: ${{ steps.prepare.outputs.barrier_sha256 }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e . opentelemetry-proto
+      - id: prepare
+        name: Verify unchanged original forecasts and preserve all first-attempt metadata
+        run: python -m ebpf_discovery.compose_ack_recovery prepare
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ack-recovery-prepare-${{ github.run_id }}-attempt${{ github.run_attempt }}
+          path: work/ack-correction/*.json
+          if-no-files-found: warn
+  target:
+    needs: prepare
+    name: target ${{ matrix.mode }}/${{ matrix.repetition }}/${{ matrix.collector }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      max-parallel: 36
+      matrix: ${{ fromJSON(needs.prepare.outputs.target_matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e . opentelemetry-proto
+      - name: Prepare and record the full standard worker resources
+        run: python -m ebpf_discovery.resources_v6 --report work/host-resources.json
+      - name: Capture fresh independent targets from the original sealed blueprint
+        run: >-
+          python -m ebpf_discovery.compose_ack_repair validate --reuse-frozen-inputs
+          --release-id '${{ needs.prepare.outputs.release_id }}'
+          --mode '${{ matrix.mode }}' --repetition '${{ matrix.repetition }}'
+          --collector '${{ matrix.collector }}'
+          --barrier-asset-id '${{ needs.prepare.outputs.barrier_asset_id }}'
+          --barrier-bytes '${{ needs.prepare.outputs.barrier_bytes }}'
+          --barrier-sha256 '${{ needs.prepare.outputs.barrier_sha256 }}'
+      - name: Retain execution and publication metadata
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ack-correction-target-${{ matrix.mode }}-${{ matrix.repetition }}-${{ matrix.collector }}-${{ github.run_id }}-attempt${{ github.run_attempt }}
+          path: |
+            work/host-resources.json
+            work/ack-correction/*.json
+            work/ack-correction/deployment/block-vm-commands.jsonl
+            work/ack-correction/deployment/vms/events/
+            work/ack-correction/deployment/vms/disk-guards.jsonl
+          if-no-files-found: warn
+      - name: Preserve a failed publication working archive for technical retry
+        if: failure()
+        run: >-
+          python -m ebpf_discovery.compose_ack_repair preserve
+          --mode '${{ matrix.mode }}' --repetition '${{ matrix.repetition }}'
+          --collector '${{ matrix.collector }}'
+      - name: Upload safe outer containers for technical retry
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ack-correction-failed-prefix-${{ matrix.mode }}-${{ matrix.repetition }}-${{ matrix.collector }}-${{ github.run_id }}-attempt${{ github.run_attempt }}
+          path: |
+            work/ack-correction/target-*.tar.gz*
+          include-hidden-files: true
+          compression-level: 0
+          if-no-files-found: warn
+  summarize:
+    needs: [prepare, target]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e . opentelemetry-proto
+      - name: Retain every attempt and publish the fixed 36-case result
+        run: python -m ebpf_discovery.compose_ack_repair summarize --release-id '${{ needs.prepare.outputs.release_id }}'
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ack-correction-summary-${{ github.run_id }}-attempt${{ github.run_attempt }}
+          path: work/ack-correction/*.json
+          if-no-files-found: warn
