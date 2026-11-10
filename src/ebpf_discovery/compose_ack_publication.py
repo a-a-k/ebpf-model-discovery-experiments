@@ -23,7 +23,7 @@ RELEASE = 440020384
 PRIOR_RUNS = (42682423732, 42682471264, 42684234727, 42684244053,
               42684834340, 42684842098, 42685244031, 42685277599,
               42768713295, 42768742396, 42768861689, 42768870755,
-              42769114098, 42769121434, 42769408009)
+              42769114098, 42769121434, 42769408009, 42779182295)
 ORIGINAL_LEDGER_SHA = '198cd5825bea33567353afb5166d552c9a2df963b8f4a86628122de82a4cbf3e'
 
 
@@ -37,7 +37,8 @@ def interval_seconds(job):
         return None
     start, end = (datetime.fromisoformat(job[n].replace('Z', '+00:00'))
                   for n in ('started_at', 'completed_at'))
-    require(end >= start, 'negative worker interval')
+    if end < start:
+        return None  # Preserve inconsistent platform timestamps as unknown, never zero.
     return (end - start).total_seconds()
 
 
@@ -54,7 +55,9 @@ def cost_census(github):
         for job in jobs:
             seconds = interval_seconds(job)
             if seconds is None:
-                unknown.append({'run': run_id, 'job_id': job['id'], 'status': job['status']})
+                unknown.append({'run': run_id, 'job_id': job['id'], 'status': job['status'],
+                                'started_at': job.get('started_at'), 'completed_at': job.get('completed_at'),
+                                'reason': 'missing_or_inconsistent_platform_timestamps'})
                 continue
             key = (run_id, job['name'], job['head_sha'], job['started_at'], job['completed_at'])
             if key not in executions:
