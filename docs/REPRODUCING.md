@@ -6,6 +6,44 @@ SDK controls and independent outcome checks.
 
 ## Published results
 
+### Corrected Social Network evaluation
+
+The [correction publication](../results/correction-publication.json) contains
+the corrected prospective results and persistent input identities for all 36
+Social Network cases. It links the exact generated summary, target receipts,
+raw archives or ordered lossless parts, complete inventories, and 85 archived
+metadata ZIPs from the forecast and replacement runs.
+
+The [forecast Release](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/compose-ack-correction-42685277599)
+preserves the original nine corrected forecast blocks and pre-target barrier.
+The [target and metadata Release](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/compose-ack-correction-42769442057)
+preserves the complete replacement data. Large primary bodies remain in Release
+storage. A split archive is reconstructed by concatenating its manifest's parts
+in order, then checking the complete byte count and SHA256 before extraction.
+
+The generated summary is `prospective-results-attempt1.json`, asset `730603417`,
+10,530,719 bytes, SHA256
+`d772bd51c199397f5b5d2aaa623d255946cbaf6541b7955ab74a145eaac2a345`.
+The publication report is asset `730638120`, 1,853,057 bytes, SHA256
+`d69134c8bf4bc617d3ab5fbe8146617277c7b62cd425801a9c9a8b3928b57f44`.
+The deterministic `derived_statistics()` function in
+[the publication source](../src/ebpf_discovery/compose_ack_publication.py)
+regenerates the report's statistics from that exact summary; this does not
+rediscover models, change forecasts or require primary TAR downloads.
+
+The [Release-only replay check](../scripts/check-compose-correction-replay.py)
+runs in the standard implementation checks. It verifies the two exact JSON
+publications, compares regenerated statistics, and verifies all 85 metadata ZIP
+hashes and member CRCs. Its client forbids live Actions API access. The replay
+receipt records its actual source/run and zero primary TAR/model downloads.
+
+Capture, forecast and publication source/run identities are separate. The
+first publication-failed target series retains its measured aggregates and
+costs; it is not counted as additional raw-backed repetitions. The corrected
+analysis leaves all 72 Petclinic/OTel cases and all original files unchanged.
+
+### Original study report
+
 The completed-result manifest selects the exact original metadata publication
 for every case. Its records include byte counts, SHA256, source commits and the
 actual producing run, job and attempt. The cost ledger retains the study scope,

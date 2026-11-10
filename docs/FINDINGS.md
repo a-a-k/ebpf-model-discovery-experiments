@@ -8,15 +8,20 @@ pipelines do not supply the missing Social Network models.
 
 For Social Network `compose_post`, the measured outcome is an HTTP ACK. Its
 historical unconditional MongoDB-write requirement is incorrect for that event.
-The [semantic correction](../results/semantic-correction.json) applies to the
-interpretation below; no corrected prospective forecast or durable-write claim
-has been validated.
+The [semantic correction](../results/semantic-correction.json) and
+[prospective results](../results/correction-publication.json) apply to the
+interpretation below. Corrected ACK and warm-fixture timeline contracts were
+frozen before 36 fresh independent Social Network checks. The eBPF operation
+coverage remains 0/3 for every tested collector, SDK mode and repetition.
+Successful ACKs still do not establish MongoDB storage or durability.
 
-The evidence covers all 108 declared cases: three applications, three SDK
+The evidence covers all 108 declared cells: three applications, three SDK
 coverage modes, four runtime treatments and three repetitions. All ten declared
-operations remain in the results. The 2,880 source/view rows reuse 360
-case-operation outcome sets, containing 1,036,800 primary requests with no
-unknown or invalid outcomes. Rows and operations are not additional independent
+operations remain. Petclinic and OTel retain their 72 original cases; the
+corrected Social Network analysis uses 36 fresh checks against the same observed
+graphs. The 2,880 source/view rows reuse 360 case-operation outcome sets and
+1,036,800 primary requests: 942,168 successes, 94,632 failures and no unknown or
+invalid outcomes. Rows and operations are not additional independent
 repetitions. Eight cases use physically paired allocation; 100 use separate
 workers. Models are frozen before independent validation deployments start.
 
@@ -82,6 +87,12 @@ supports all three operations, including in the no-agent control. No specialized
 Thrift decoder was tested; the result is a limit of these pinned pipelines,
 not a general impossibility result for Thrift or these products.
 
+The corrected prospective analysis confirms this coverage in all 36 cases.
+Native, combined and context inputs each support zero operations without SDK,
+only `read_home_timeline` with partial SDK, and all three operations with full
+SDK. Correcting the outcome contract does not supply the missing observed
+Thrift caller/callee evidence.
+
 ## External forecast agreement
 
 All 1,146 available source/view point predictions equal the equally informed
@@ -92,11 +103,15 @@ of observation-derived models, without establishing a forecasting advantage
 over that calculation. Classification results also remain equivalent to the
 cheap base-family assignment.
 
-There are 192 case-operation outcome sets with at least one available forecast.
-Fifteen disagree with their point forecast, accounting for 84 repeated source/view
-rows. Across all 360 outcome sets, 17 differ from the common direct reference;
-two of these have no available observation-derived forecast. All are retained.
-The largest discrepancies are:
+There are 192 case-operation sets with at least one available forecast.
+Eighteen differ from that forecast, producing 102 repeated source/view error
+rows. The direct reference differs in 21 of the 360 sets; three of those have
+no available observation-derived forecast. All are retained. These totals use
+the 72 unchanged Petclinic/OTel cases and the 36 corrected Social Network checks.
+
+The unchanged Petclinic/OTel evidence retains its deviations from the conditional
+forecast, including the larger OTel discrepancies below. They are not removed
+or attributed to a collector from outcome agreement alone.
 
 | OTel case | Operation | Observed successes / requests | Point prediction | Absolute error, percentage points |
 | --- | --- | --- | --- | --- |
@@ -110,12 +125,24 @@ The largest discrepancies are:
 | full/10, DeepFlow | cart | 2727/3200 | 0.875 | 2.28125 |
 | full/10, DeepFlow | checkout | 2621/3200 | 0.875 | 5.59375 |
 
-The other eight deviations range from 0.03125 to 0.21875 percentage points.
+The other original deviations range from 0.03125 to 0.21875 percentage points.
 Most excess failures in the larger discrepancies occur in state `10`, where
 the conditional forecast predicts success. Their cause is unresolved. They
 cannot be attributed to a collector from these outcomes alone. Checkout's old
 20 MiB container limit was corrected uniformly before this study; that previous
 diagnosis is not evidence for the cause of these failures.
+
+The corrected Social Network checks contain 345,600 primary requests with no
+unknown or invalid outcomes. Compose records 100,794/115,200 successes; home
+records 115,200/115,200; user records 100,800/115,200. All 288 available primary
+source/view forecasts equal the direct conditional calculation.
+
+Five Compose case-operation sets differ from the direct prediction of
+2800/3200 successes: full/9 NONE, full/11 Coroot, full/11 DeepFlow and partial/11
+NONE record 2799; partial/9 NONE records 2798. The largest error is 0.0625
+percentage points. Only the three full-SDK cases have available graph forecasts,
+producing 18 repeated source/view error rows. All six excess failures remain in
+the results. These small deviations do not establish a collector effect.
 
 ## Database and asynchronous limits
 
@@ -124,7 +151,13 @@ Every raw-view database-down prediction is unknown. The network view contains
 outcomes. This is selective conditional evidence, not complete reconstruction
 of database dependencies. All OTel DB predictions remain unknown.
 
-Social Network compose acknowledges all 252 DB-down requests across its 36 cases.
+Social Network compose acknowledges all 252 fresh DB-down requests across its
+36 corrected cases. The direct conditional prediction is one, under the
+registered declared-exception mask and fulfilled-prefix conditions. Across all
+three operations it agrees with 720/720 DB-down outcomes. The graph-based DB-down
+forecasts remain unavailable in all 864 source/view rows; the direct calculation
+does not require a recovered graph or selected-endpoint attribution.
+
 The historical direct database-down prediction of zero used an incorrect
 unconditional MongoDB-write requirement for this measured HTTP ACK. The pinned
 Lua client decodes but ignores a declared `ComposePost` service exception; the
@@ -133,19 +166,18 @@ a contract/oracle mismatch, not that every one of the 252 requests took that
 execution branch. The ACK measurements remain valid; they do not establish a
 successful MongoDB write, durability, or a failed fault injection.
 
-This DB error does not establish a change in the primary model-availability
-counts. Missing DB channels can be assumed satisfied in the primary replica-only
+Missing DB channels can be assumed satisfied in the primary replica-only
 forecast; missing interservice Thrift paths remain separate obstacles. The
-published counts still describe the historical contract and pinned pipelines.
-The full ACK contract, including its different exception paths, needs review
-before corrected model claims are made.
+corrected prospective results establish that the operation-availability counts
+remain unchanged for these pinned pipelines.
 
 The [semantic correction](../results/semantic-correction.json) preserves the
-original measurements and frozen predictions. Corrected forecasts have not been
-computed or independently validated. Applying a corrected contract to the known
-targets would be post-hoc analysis; a new prospective claim requires corrected
-forecasts frozen before fresh independent targets. The same outcome definition
-must apply to every compared method.
+original measurements and frozen predictions. Corrected contracts were applied
+equally to native, eBPF, combined, context and direct methods. All nine blocks
+were frozen before the fresh targets. ReadUserTimeline's DB-down reference
+uses the preserved warm Redis fixture and fulfilled PostStorage; MongoDB can
+still be attempted on this path. The source conditions and all misses remain
+explicit in the [contract description](COMPOSE_OUTCOME_CORRECTION.md).
 
 All 36 OTel cases retain 20 records in each asynchronous phase: persisted in
 normal execution, pending while paused, and persisted after resumption and
@@ -154,7 +186,7 @@ causality or a model-based delivery forecast.
 
 ## Data, provenance and costs
 
-The [complete generated JSON](../results/literal-results.json) retains scientific
+The [original generated JSON](../results/literal-results.json) retains scientific
 fields, unavailable values and adverse outcomes. Only the two declared
 classification-assignment arrays are omitted. It was produced by
 [Actions run 42520421400](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42520421400)
@@ -181,4 +213,21 @@ The [publication archive](../results/archive.json) retains the 102 canonical
 metadata ZIPs, the historical Coroot prefix, required source and historical API
 receipts. It supports report replay without live Actions API access. This tier
 does not preserve the complete raw-capture/model-build regeneration closure;
-replay agreement does not validate the corrected compose contract.
+replay agreement alone does not validate the corrected compose contract.
+
+The [correction publication](../results/correction-publication.json) links all
+36 raw-backed target receipts, full archives or lossless parts, the original
+forecast barrier, and 85 permanent metadata ZIPs. Full classification arrays
+remain in the raw captures; result projections omit only their two declared
+assignment arrays. The first correction attempt completed measurements but lost
+raw publication. Its 36 aggregates and all worker costs remain historical
+evidence, not extra raw-backed repetitions. All 36 replacement cases were
+selected before inspecting forecast accuracy; that series required no retries.
+
+The incremental correction ledger records 262,974 known worker-seconds and one
+unknown platform interval, including source checks, the failed raw-publication
+attempt, replacement measurements and the failed metadata finalizer. The unknown
+record is a skipped GitHub job whose end timestamp precedes its start. Its raw
+timestamps remain retained. Nested phase telemetry is not added again. The
+successful finalizer and later delivery remain outside the finite cost cut and
+are not assigned zero cost. No complete cost-superiority comparison is claimed.

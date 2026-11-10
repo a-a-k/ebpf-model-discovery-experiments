@@ -14,7 +14,7 @@ The [protocol](docs/PROTOCOL_V6.md) defines 108 cells:
 - Runtime treatments: no eBPF agent, OBI, Coroot and DeepFlow.
 - Repetitions: 9, 10 and 11; all ten application operations are retained.
 
-The no-agent treatment runs without a study eBPF collector. Training and
+The no-agent treatment runs without a study eBPF collector. Model acquisition and
 validation use separate deployments. All four forecasts in a logical block
 must be frozen before validation starts. The
 [allocation protocol](docs/PROTOCOL_V6_ISOLATED_ARMS.md) distinguishes eight
@@ -32,14 +32,22 @@ OBI supplies operation models without SDK traces for Petclinic and OTel Demo;
 partial OTel coverage requires the observed-context union. The tested eBPF
 pipelines do not restore the missing Social Network models.
 
-The [generated results](results/literal-results.json),
+The [corrected Social Network results](results/correction-publication.json)
+retain 36 fresh independent checks of the corrected HTTP-ACK and timeline
+contracts. All nine forecast blocks were frozen before the checks. Pure eBPF
+still supplies none of the three Social Network operation models; SDK coverage
+and the missing Thrift chains determine the available models. All 36 raw captures
+and the correction's execution metadata are retained in Release storage.
+
+The [original generated results](results/literal-results.json),
 [publication manifest](docs/v6-full108-completed-result-manifest.json),
 [cost ledger](docs/v6-full108-completed-cost-ledger.json) and
 [provenance](results/provenance.json) preserve the complete result scope,
 including unavailable predictions and adverse outcomes.
 The [outcome-semantics correction](results/semantic-correction.json) identifies
-the Social Network HTTP-ACK/MongoDB-write contract mismatch and distinguishes
-historical forecasts from any subsequent corrected analysis.
+the Social Network HTTP-ACK/MongoDB-write contract mismatch and links the
+completed prospective correction. HTTP acknowledgement does not prove storage
+or durability.
 The [publication archive receipt](results/archive.json) identifies the retained
 metadata and the report replay that does not require live Actions API access.
 The [reproduction guide](docs/REPRODUCING.md) describes acquisition and report
