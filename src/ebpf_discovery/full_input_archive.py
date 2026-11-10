@@ -401,17 +401,42 @@ def prepare(github, root):
                plan_id=a['id'], plan_bytes=a['size'], plan_sha256=a['digest'][7:])
         return
     workflows, artifacts, commits = [], {}, {os.environ['GITHUB_SHA']}
-    for run_id in sorted(set(ORIGINAL_RUNS)):
-        run = github.json(f'actions/runs/{run_id}')
-        jobs = github.pages(f'actions/runs/{run_id}/jobs?filter=all', 'jobs')
-        rows = github.pages(f'actions/runs/{run_id}/artifacts', 'artifacts')
-        workflows.append({'run': run, 'jobs': jobs})
-        commits.add(run['head_sha'])
-        for artifact in rows:
-            require(not artifact['expired'] and artifact['digest'].startswith('sha256:') and
-                    artifact['size_in_bytes'] < 6 * 1024**3, 'unavailable/oversized original input')
-            require(artifact['workflow_run']['id'] == run_id, 'artifact producer run differs')
-            artifacts[artifact['id']] = artifact
+    references = []
+
+    def collect_references(value):
+        if isinstance(value, dict):
+            if (isinstance(value.get('id'), int) and
+                    isinstance(value.get('size_in_bytes'), int) and
+                    isinstance(value.get('digest'), str)):
+                references.append(value['id'])
+            if (isinstance(value.get('id'), int) and
+                    isinstance(value.get('bytes'), int) and
+                    isinstance(value.get('sha256'), str)):
+                references.append(value['id'])
+            for item in value.values():
+                collect_references(item)
+        elif isinstance(value, list):
+            for item in value:
+                collect_references(item)
+
+    collect_references(read('results/literal-results.json'))
+    collect_references(read('docs/v6-full108-completed-result-manifest.json'))
+    seed_ids = sorted(set(references))
+    require(seed_ids, 'canonical dependency manifests contain no artifact references')
+    for artifact_id in seed_ids:
+        artifact = github.json(f'actions/artifacts/{artifact_id}')
+        require(artifact['id'] == artifact_id and not artifact['expired'] and
+                artifact['digest'].startswith('sha256:') and
+                artifact['size_in_bytes'] < 6 * 1024**3,
+                f'unavailable/oversized referenced artifact {artifact_id}')
+        artifacts[artifact_id] = artifact
+        run_id = artifact['workflow_run']['id']
+        if not any(row['run']['id'] == run_id for row in workflows):
+            run = github.json(f'actions/runs/{run_id}')
+            jobs = github.pages(f'actions/runs/{run_id}/jobs?filter=all', 'jobs')
+            workflows.append({'run': run, 'jobs': jobs})
+            commits.add(run['head_sha'])
+    require(set(artifacts) == set(seed_ids), 'referenced artifact inventory changed during resolution')
     # Existing byte-exact report ZIPs are reused and fully reread, not uploaded again.
     old = read('results/archive.json')['archive_index']
     path = root / 'metadata-archive-index.json'
