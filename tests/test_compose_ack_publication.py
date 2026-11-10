@@ -5,6 +5,7 @@ import pytest
 
 from ebpf_discovery.compose_ack_contract import OPERATIONS, UNAVAILABLE, direct_baselines
 from ebpf_discovery.compose_ack_publication import derived_statistics
+from ebpf_discovery.compose_ack_publication import interval_seconds
 from ebpf_discovery.compose_ack_repair import ARMS, project_targets
 from tests.test_compose_ack_repair import synthetic_records
 
@@ -34,3 +35,10 @@ def test_source_projection_cannot_silently_drop_unknown_observations():
     value['cases'][0]['result']['rows'][0]['observed']['unknown'] = 0
     with pytest.raises(ValueError, match='same measured operation outcomes'):
         derived_statistics(value)
+
+
+def test_inconsistent_platform_worker_times_are_unknown_not_zero_or_negative():
+    job = {'started_at': '2026-11-09T21:00:01Z', 'completed_at': '2026-11-09T21:00:00Z'}
+    assert interval_seconds(job) is None
+    assert interval_seconds({'started_at': job['started_at'], 'completed_at': None}) is None
+    assert interval_seconds({'started_at': job['completed_at'], 'completed_at': job['started_at']}) == 1
