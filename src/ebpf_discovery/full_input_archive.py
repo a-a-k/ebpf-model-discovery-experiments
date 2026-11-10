@@ -382,18 +382,23 @@ def save_source_bundle(root, commits):
 def prepare(github, root):
     require(file_digest('results/literal-results.json') == REFERENCE, 'original canonical results changed')
     tag = 'full-input-archive-' + os.environ['GITHUB_RUN_ID']
-    matches = [r for r in github.pages('releases') if r['tag_name'] == tag]
-    require(len(matches) <= 1, 'ambiguous owned input archive')
-    info = matches[0] if matches else github.request('POST', 'releases', json={
-        'tag_name': tag, 'target_commitish': os.environ['GITHUB_SHA'], 'draft': False, 'prerelease': True,
-        'name': 'Study inputs: unsealed archive in progress',
+    infos = {}
+    for group in (0, 1):
+        group_tag = f'{tag}-group{group}'
+        matches = [r for r in github.pages('releases') if r['tag_name'] == group_tag]
+        require(len(matches) <= 1, 'ambiguous owned input archive')
+        infos[group] = matches[0] if matches else github.request('POST', 'releases', json={
+        'tag_name': group_tag, 'target_commitish': os.environ['GITHUB_SHA'], 'draft': False, 'prerelease': True,
+        'name': f'Study inputs: unsealed archive group {group}',
         'body': 'Full-input-archive-owner: ' + os.environ['GITHUB_RUN_ID'] +
-                '\nIncomplete until full-input-index.json and its successful closure receipt are published.'}).json()
-    require(info['target_commitish'] == os.environ['GITHUB_SHA'], 'foreign input archive source')
-    release = Release(github, info['id'])
+                '\nIncomplete until the linked full-input-index.json and closure receipts are published.'}).json()
+        require(infos[group]['target_commitish'] == os.environ['GITHUB_SHA'], 'foreign input archive source')
+    release_ids = {str(shard): infos[0 if shard < 20 else 1]['id'] for shard in range(SHARDS + 1)}
+    release = Release(github, infos[0]['id'])
     if 'archive-plan.json' in release.assets:
         a = release.assets['archive-plan.json']
-        output(release_id=release.id, plan_id=a['id'], plan_bytes=a['size'], plan_sha256=a['digest'][7:])
+        output(release_ids=json.dumps(release_ids, separators=(',', ':')),
+               plan_id=a['id'], plan_bytes=a['size'], plan_sha256=a['digest'][7:])
         return
     workflows, artifacts, commits = [], {}, {os.environ['GITHUB_SHA']}
     for run_id in sorted(set(ORIGINAL_RUNS)):
@@ -443,9 +448,17 @@ def prepare(github, root):
     )
     # Parts, one receipt per worker (including the format-check worker), the
     # plan, source bundle, registered study inputs, and final index.
-    expected_assets = part_count + len(assignments) + 4
-    require(expected_assets <= MAX_RELEASE_ASSETS,
-            f'planned Release asset count {expected_assets} exceeds {MAX_RELEASE_ASSETS}')
+    group_part_counts = {
+        group: sum(
+            (artifacts[artifact_id]['size_in_bytes'] + PART_BYTES - 1) // PART_BYTES
+            for shard, artifact_ids in assignments.items()
+            if (0 if int(shard) < 20 else 1) == group
+            for artifact_id in artifact_ids if artifact_id not in reused
+        )
+        for group in (0, 1)
+    }
+    require(max(group_part_counts.values()) + 41 + 4 <= MAX_RELEASE_ASSETS,
+            f'planned Release asset count exceeds {MAX_RELEASE_ASSETS}: {group_part_counts}')
     if 'study-source.bundle' in release.assets:
         source_asset = release.assets['study-source.bundle']
     else:
@@ -462,24 +475,31 @@ def prepare(github, root):
     inputs_asset = release.publish(inputs)
     plan = {'schema': 'full-input-archive-v1', 'original_results_sha256': REFERENCE,
             'creation_run': os.environ['GITHUB_RUN_ID'], 'creation_source': os.environ['GITHUB_SHA'],
-            'release_id': release.id, 'release_tag': tag, 'snapshot_ns': time.time_ns(),
+            'release_ids': release_ids, 'release_tag': tag, 'snapshot_ns': time.time_ns(),
             'artifacts': list(artifacts.values()), 'original_workflows': workflows, 'canonical': canonical,
             'assignments': assignments, 'part_bytes': PART_BYTES, 'reused_original_ZIPs': reused,
-            'planned_part_count': part_count, 'planned_release_asset_count': expected_assets,
+            'planned_part_count': part_count, 'planned_release_asset_count': {
+                str(group): group_part_counts[group] + 41 + (4 if group == 0 else 1)
+                for group in (0, 1)},
             'study_source_bundle': identity(source_asset), 'registered_study_inputs': identity(inputs_asset),
             'correction_publication': read('results/correction-publication.json'),
             'human_seconds': None, 'complete_comparable_cost_comparison': False}
     path = root / 'archive-plan.json'
     write_json(path, plan)
     asset = release.publish(path)
-    output(release_id=release.id, plan_id=asset['id'], plan_bytes=asset['size'], plan_sha256=asset['digest'][7:])
+    Release(github, infos[1]['id']).publish(path)
+    output(release_ids=json.dumps(release_ids, separators=(',', ':')),
+           plan_id=asset['id'], plan_bytes=asset['size'], plan_sha256=asset['digest'][7:])
 
 
 def load_plan(github, root, args):
     path = root / 'archive-plan.json'
-    github.download(f'releases/assets/{args.plan_id}', path, args.plan_bytes, args.plan_sha256)
+    release = Release(github, args.release_id)
+    asset = release.assets.get('archive-plan.json')
+    require(asset is not None, 'archive plan missing from shard Release')
+    github.download(f"releases/assets/{asset['id']}", path, asset['size'], asset['digest'][7:])
     plan = read(path)
-    require(plan['schema'] == 'full-input-archive-v1' and plan['release_id'] == args.release_id and
+    require(plan['schema'] == 'full-input-archive-v1' and args.release_id in plan['release_ids'].values() and
             plan['creation_run'] == os.environ['GITHUB_RUN_ID'] and plan['creation_source'] == os.environ['GITHUB_SHA'],
             'foreign archive plan/source/run')
     return plan
@@ -506,7 +526,7 @@ def verify_part_coverage(parts, records):
 
 
 def worker(github, root, plan, shard):
-    release = Release(github, plan['release_id'])
+    release = Release(github, plan['release_ids'][str(shard)])
     started = time.time_ns()
     writer = PartWriter(release, root, shard, plan['part_bytes'])
     artifacts = {a['id']: a for a in plan['artifacts']}
@@ -613,11 +633,13 @@ def verify_correction(root, plan, shard):
 
 
 def finalize(github, root, plan):
-    release = Release(github, plan['release_id'])
+    releases = {str(shard): Release(github, release_id)
+                for shard, release_id in plan['release_ids'].items()}
+    release = releases['0']
     rows, all_artifacts, closures, corrected = [], {}, [], []
     metadata_count = freeze_count = 0
     for shard in range(SHARDS + 1):
-        asset = release.assets[f'shard-{shard:02d}-receipt.json']
+        asset = releases[str(shard)].assets[f'shard-{shard:02d}-receipt.json']
         path = root / asset['name']
         public_download(asset, path)
         receipt = read(path)
@@ -701,7 +723,7 @@ def finalize(github, root, plan):
             intervals.setdefault(key, {'worker_seconds': seconds, 'aliases': []})['aliases'].append(job['id'])
     index = {'schema': plan['schema'], 'status': 'complete', 'plan': {
         'asset_id': int(os.environ['FULL_ARCHIVE_PLAN_ID']), 'bytes': (root / 'archive-plan.json').stat().st_size,
-        'sha256': file_digest(root / 'archive-plan.json')}, 'release_id': plan['release_id'],
+        'sha256': file_digest(root / 'archive-plan.json')}, 'release_ids': plan['release_ids'],
         'creation_source': plan['creation_source'], 'artifacts': list(all_artifacts.values()), 'shards': rows,
         'canonical_108_closure_checks': checks, 'study_source_bundle': plan['study_source_bundle'],
         'corrected_36_raw_input_checks': corrected, 'corrected_metadata_ZIPs_verified': metadata_count,
@@ -797,6 +819,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('command', choices=('prepare', 'worker', 'finalize', 'import-check', 'model-sample'))
     parser.add_argument('--release-id', type=int)
+    parser.add_argument('--release-ids')
     parser.add_argument('--plan-id', type=int)
     parser.add_argument('--plan-bytes', type=int)
     parser.add_argument('--plan-sha256')
@@ -819,6 +842,8 @@ def main():
         elif args.command == 'prepare':
             prepare(github, root)
         else:
+            if args.command == 'finalize':
+                args.release_id = int(json.loads(args.release_ids)['0'])
             plan = load_plan(github, root, args)
             if args.command == 'worker':
                 worker(github, root, plan, args.shard)

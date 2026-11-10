@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 360
     outputs:
-      release_id: ${{ steps.plan.outputs.release_id }}
+      release_ids: ${{ steps.plan.outputs.release_ids }}
       plan_id: ${{ steps.plan.outputs.plan_id }}
       plan_bytes: ${{ steps.plan.outputs.plan_bytes }}
       plan_sha256: ${{ steps.plan.outputs.plan_sha256 }}
@@ -64,7 +64,7 @@ jobs:
       - name: Archive and read actual package formats before the full transfer
         run: >-
           python -m ebpf_discovery.full_input_archive worker --shard 40
-          --release-id '${{ needs.prepare.outputs.release_id }}'
+          --release-id '${{ fromJSON(needs.prepare.outputs.release_ids)['40'] }}'
           --plan-id '${{ needs.prepare.outputs.plan_id }}'
           --plan-bytes '${{ needs.prepare.outputs.plan_bytes }}'
           --plan-sha256 '${{ needs.prepare.outputs.plan_sha256 }}'
@@ -96,7 +96,7 @@ jobs:
       - name: Preserve original bytes and verify a fresh Release-only read
         run: >-
           python -m ebpf_discovery.full_input_archive worker --shard '${{ matrix.shard }}'
-          --release-id '${{ needs.prepare.outputs.release_id }}'
+          --release-id '${{ fromJSON(needs.prepare.outputs.release_ids)[format('{0}', matrix.shard)] }}'
           --plan-id '${{ needs.prepare.outputs.plan_id }}'
           --plan-bytes '${{ needs.prepare.outputs.plan_bytes }}'
           --plan-sha256 '${{ needs.prepare.outputs.plan_sha256 }}'
@@ -129,7 +129,7 @@ jobs:
         name: Check all canonical closures and publish the complete input index
         run: >-
           python -m ebpf_discovery.full_input_archive finalize
-          --release-id '${{ needs.prepare.outputs.release_id }}'
+          --release-ids '${{ needs.prepare.outputs.release_ids }}'
           --plan-id '${{ needs.prepare.outputs.plan_id }}'
           --plan-bytes '${{ needs.prepare.outputs.plan_bytes }}'
           --plan-sha256 '${{ needs.prepare.outputs.plan_sha256 }}'
