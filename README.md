@@ -30,7 +30,9 @@ predictive usefulness.
 The [results and limitations](docs/FINDINGS.md) cover all 108 completed cases.
 OBI supplies operation models without SDK traces for Petclinic and OTel Demo;
 partial OTel coverage requires the observed-context union. The tested eBPF
-pipelines do not restore the missing Social Network models.
+eBPF-only pipelines do not restore the missing Social Network operation models.
+Combining SDK structure with Coroot/DeepFlow network observations supports 48
+database-fault forecast rows over 24 shared case-operation outcome sets.
 
 The [corrected Social Network results](results/correction-publication.json)
 retain 36 fresh independent checks of the corrected HTTP-ACK and timeline
