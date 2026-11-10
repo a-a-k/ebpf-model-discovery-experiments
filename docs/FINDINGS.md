@@ -4,7 +4,9 @@ The completed study supports conditional use of eBPF observations when SDK
 traces are absent or incomplete. OBI supplies useful operation models for
 Petclinic and for OTel Demo with absent SDK traces. OTel with partial tracing
 requires a different combination of the available observations. The tested
-pipelines do not supply the missing Social Network models.
+eBPF-only pipelines do not supply the missing Social Network operation models.
+Combining SDK structure with Coroot/DeepFlow network observations does support
+selected database-fault forecasts, as described below.
 
 For Social Network `compose_post`, the measured outcome is an HTTP ACK. Its
 historical unconditional MongoDB-write requirement is incorrect for that event.
@@ -147,16 +149,27 @@ the results. These small deviations do not establish a collector effect.
 ## Database and asynchronous limits
 
 Every raw-view database-down prediction is unknown. The network view contains
-225 finite DB predictions, matching the direct reference and observed DB-down
+249 finite DB predictions: 201 for Petclinic and 48 for the corrected Social
+Network cases. They match the direct reference and observed DB-down
 outcomes. This is selective conditional evidence, not complete reconstruction
 of database dependencies. All OTel DB predictions remain unknown.
 
 Social Network compose acknowledges all 252 fresh DB-down requests across its
 36 corrected cases. The direct conditional prediction is one, under the
 registered declared-exception mask and fulfilled-prefix conditions. Across all
-three operations it agrees with 720/720 DB-down outcomes. The graph-based DB-down
-forecasts remain unavailable in all 864 source/view rows; the direct calculation
-does not require a recovered graph or selected-endpoint attribution.
+three operations it agrees with 720/720 DB-down outcomes. Of the 864 graph-based
+source/view rows, 48 have available DB-down forecasts and 816 remain unavailable.
+The 48 available rows all predict one and have zero observed error. They cover
+24 distinct case-operation sets shared by combined and context-baseline inputs.
+
+These forecasts occur only in the network_scope view of Coroot and DeepFlow:
+full SDK supports all three operations; partial SDK supports read_home_timeline.
+Across the two methods there are 12 Compose, 24 home and 12 user forecast rows.
+Native and eBPF-only inputs have no available DB-down forecast in these cases.
+Thus the combined network evidence supports some database-fault queries without
+restoring additional primary operation models. The cheap context baseline
+achieves the same result. The direct calculation does not require a recovered
+graph or selected-endpoint attribution.
 
 The historical direct database-down prediction of zero used an incorrect
 unconditional MongoDB-write requirement for this measured HTTP ACK. The pinned

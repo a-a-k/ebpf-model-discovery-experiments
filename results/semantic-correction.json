@@ -56,9 +56,12 @@
     "primary_requests": 345600,
     "database_down_requests": 720,
     "compose_ack_database_down_successes": 252,
-    "graph_database_down_forecasts_available": 0,
+    "graph_database_down_forecasts_available": 48,
     "first_attempt_aggregates_retained_but_raw_missing": 36,
     "replacement_technical_retries": 0,
-    "write_or_durability_claim": false
+    "write_or_durability_claim": false,
+    "graph_database_down_forecasts_unavailable": 816,
+    "graph_database_down_distinct_case_operation_sets": 24,
+    "latest108_graph_database_down_forecasts_available": 249
   }
 }
