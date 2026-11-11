@@ -1,0 +1,52 @@
+name: Retrospective replay of retained publication example
+on:
+  push:
+    branches: [publication/replay-example-20261111]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+env:
+  PYTHONUNBUFFERED: '1'
+  GH_TOKEN: ${{ github.token }}
+jobs:
+  replay:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          ref: b913a5df7be680c5e6ede001d0f8eb6fb856a4ed
+          path: work/historical
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install the historical reader and codec dependencies
+        run: python -m pip install -e work/historical opentelemetry-proto
+      - name: Verify Zenodo bytes and replay the retained example
+        id: replay
+        run: |
+          python scripts/replay-publication-example.py \
+            --historical "$GITHUB_WORKSPACE/work/historical" \
+            --work "$GITHUB_WORKSPACE/work/publication-replay-work" \
+            --out "$GITHUB_WORKSPACE/work/publication-replay-output"
+      - name: Inspect the three pinned context-union cases
+        if: always()
+        continue-on-error: true
+        run: |
+          python workflow/context_sidecar_audit.py \
+            --helper scripts/replay-publication-example.py \
+            --core "$GITHUB_WORKSPACE/work/publication-replay-output/evidence/code-and-results.zip" \
+            --work "$GITHUB_WORKSPACE/work/context-sidecars" \
+            --out "$GITHUB_WORKSPACE/work/publication-replay-output"
+      - name: Preserve every completed or failed replay attempt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: publication-example-replay-${{ github.run_id }}-attempt${{ github.run_attempt }}
+          path: work/publication-replay-output/
+          compression-level: 6
+          if-no-files-found: error
+          retention-days: 90
