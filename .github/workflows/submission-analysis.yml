@@ -1,0 +1,52 @@
+name: Build SoSyM publication analysis
+on:
+  push:
+    branches: [publication/sosym-submission-20261111]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+env:
+  PYTHONPATH: src:.
+  PYTHONUNBUFFERED: '1'
+  GH_TOKEN: ${{ github.token }}
+jobs:
+  analyze:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install requests
+      - name: Retrieve the pinned corrected analytical publication
+        run: |
+          python - <<'PYTHON'
+          from pathlib import Path
+          from ebpf_discovery.publication_archive import GitHub
+          from ebpf_discovery.compact_publication import SUMMARY_ID, SUMMARY_BYTES, SUMMARY_SHA
+          Path('work').mkdir(exist_ok=True)
+          GitHub().download(f'releases/assets/{SUMMARY_ID}', Path('work/prospective-results-attempt1.json'), SUMMARY_BYTES, SUMMARY_SHA)
+          PYTHON
+      - name: Reaggregate all 108 selected cases with explicit denominators
+        run: |
+          python scripts/build-submission-analysis.py \
+            --original "$GITHUB_WORKSPACE/results/literal-results.json" \
+            --corrected "$GITHUB_WORKSPACE/work/prospective-results-attempt1.json" \
+            --correction-report "$GITHUB_WORKSPACE/results/correction-publication.json" \
+            --cost-ledger "$GITHUB_WORKSPACE/docs/v6-full108-completed-cost-ledger.json" \
+            --provenance "$GITHUB_WORKSPACE/results/provenance.json" \
+            --out "$GITHUB_WORKSPACE/work/submission-analysis"
+      - name: Extract the pinned example without new model construction
+        run: |
+          python scripts/extract-publication-example.py \
+            --out "$GITHUB_WORKSPACE/work/submission-analysis" \
+            --cache "$GITHUB_WORKSPACE/work/example-cache"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sosym-analysis-${{ github.run_id }}
+          path: work/submission-analysis/
+          compression-level: 6
+          if-no-files-found: error
+          retention-days: 90
