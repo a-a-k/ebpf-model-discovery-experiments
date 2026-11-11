@@ -1,0 +1,153 @@
+name: Compare retained SoSyM analytical outputs
+
+on:
+  push:
+    branches: [publication/compare-reaggregation-20261111]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+env:
+  PYTHONUNBUFFERED: '1'
+  GH_TOKEN: ${{ github.token }}
+
+jobs:
+  compare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install the archive transport dependency
+        run: python -m pip install requests
+      - name: Check reader syntax before archive access
+        run: |
+          python -m py_compile \
+            scripts/replay-publication-example.py \
+            scripts/compare-publication-reaggregation.py
+      - name: Retrieve only the pinned 18 MB completed replay output
+        run: |
+          python - <<'PY'
+          import hashlib
+          import importlib.util
+          import json
+          from pathlib import Path
+
+          target_dir = Path('work/publication-comparison-only').resolve()
+          out = Path('work/publication-comparison-output').resolve()
+          target_dir.mkdir(parents=True, exist_ok=True)
+          out.mkdir(parents=True, exist_ok=True)
+          receipt = {
+              'status': 'started',
+              'maximum_expected_archive_bytes_for_this_job': 18527974,
+              'new_model_execution': False,
+              'new_reaggregation_execution': False,
+              'new_observation_extraction': False,
+          }
+          success = False
+          try:
+              helper_path = Path('scripts/replay-publication-example.py').resolve()
+              expected_helper = '6bea09a0310fdcc7d70c0aa60f51f01c2bed23aa5928ff85e7988d14a878a359'
+              if hashlib.sha256(helper_path.read_bytes()).hexdigest() != expected_helper:
+                  raise ValueError('transport_source_pin_mismatch')
+              spec = importlib.util.spec_from_file_location('retained_archive_transport', helper_path)
+              helper = importlib.util.module_from_spec(spec)
+              spec.loader.exec_module(helper)
+              budget = helper.DownloadBudget(out / 'download-budget.json')
+              budget.save()
+              main = (13879962480, 18047490,
+                      '0cb833199266f63d6a9aa237c12878a61928268040e897887e70f55b92620606')
+              target = target_dir / 'main-replay-output.zip'
+              metadata = helper.github_artifact(*main, budget, target)
+              producer = metadata.get('workflow_run') or {}
+              if (metadata.get('name') != 'publication-example-replay-43063706864-attempt1'
+                      or producer.get('id') != 43063706864
+                      or producer.get('head_sha') != '91c4a8334cea968c00da3f62c23b2f192cdc18e6'):
+                  raise ValueError('main_output_producer_mismatch')
+              if budget.value['consumed_archive_response_bytes'] != main[1]:
+                  raise ValueError('unexpected_bootstrap_download_bytes')
+              receipt.update(
+                  status='verified',
+                  main_archive=helper.reference(target),
+                  main_artifact={key: metadata[key] for key in
+                                 ('id', 'name', 'size_in_bytes', 'digest', 'workflow_run')},
+                  transport_script_sha256=expected_helper,
+              )
+              success = True
+          except Exception as error:
+              receipt.update(status='failed', error_type=type(error).__name__)
+          finally:
+              (out / 'comparison-bootstrap-receipt.json').write_text(
+                  json.dumps(receipt, indent=2) + '\n', encoding='utf-8')
+              print(json.dumps({'bootstrap_status': receipt['status']}), flush=True)
+          raise SystemExit(0 if success else 1)
+          PY
+      - name: Compare the already produced tables and manifests
+        run: |
+          python scripts/compare-publication-reaggregation.py \
+            --main-zip work/publication-comparison-only/main-replay-output.zip \
+            --work work/publication-comparison-only/compare \
+            --out work/publication-comparison-output
+      - name: Report the bounded comparison and observed archive layouts
+        id: report
+        if: always()
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+
+          out = Path('work/publication-comparison-output')
+          result = {}
+          files = {
+              'bootstrap': out / 'comparison-bootstrap-receipt.json',
+              'comparison': out / 'evidence/reaggregation-comparison/comparison-receipt.json',
+              'differences': out / 'evidence/reaggregation-comparison/differences.json',
+              'download_budget': out / 'download-budget.json',
+          }
+          for key, path in files.items():
+              if not path.is_file():
+                  result[key] = {'status': 'missing'}
+                  continue
+              body = path.read_bytes()
+              if len(body) > 2 * 1024**2:
+                  result[key] = {'status': 'retained_in_artifact', 'bytes': len(body),
+                                 'sha256': hashlib.sha256(body).hexdigest()}
+              else:
+                  result[key] = json.loads(body)
+          budget = result.get('download_budget', {})
+          if budget.get('consumed_archive_response_bytes', 0) > 18527974:
+              raise ValueError('diagnostic_job_archive_budget_exceeded')
+          total = sum(path.stat().st_size for path in out.rglob('*') if path.is_file())
+          if total > 32 * 1024**2:
+              raise ValueError('comparison_output_bound_exceeded')
+          with Path(os.environ['GITHUB_OUTPUT']).open('a', encoding='utf-8') as stream:
+              stream.write('within_bound=true\n')
+          encoded = json.dumps(result, ensure_ascii=True, separators=(',', ':'))
+          if len(('PUBLICATION_REAGGREGATION_ONLY_JSON=' + encoded + '\n').encode()) > 240 * 1024:
+              comparison = result.get('comparison', {})
+              for layout in comparison.get('archive_layouts', {}).values():
+                  if 'members' in layout:
+                      layout['members'] = [
+                          {'member': row['member'], 'bytes': row['bytes']}
+                          for row in layout['members']]
+              encoded = json.dumps(result, ensure_ascii=True, separators=(',', ':'))
+          if len(('PUBLICATION_REAGGREGATION_ONLY_JSON=' + encoded + '\n').encode()) > 240 * 1024:
+              raise ValueError('bounded_comparison_log_exceeded')
+          print('PUBLICATION_REAGGREGATION_ONLY_JSON=' + encoded, flush=True)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.report.outputs.within_bound == 'true'
+        with:
+          name: publication-reaggregation-comparison-${{ github.run_id }}-attempt${{ github.run_attempt }}
+          path: work/publication-comparison-output/
+          compression-level: 6
+          if-no-files-found: error
+          retention-days: 90

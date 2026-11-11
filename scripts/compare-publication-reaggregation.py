@@ -99,7 +99,17 @@ def transport_module():
     return module
 
 
-def read_outputs(path, manifest_suffix):
+def zip_inventory(path):
+    with zipfile.ZipFile(path) as archive:
+        return [{
+            "member": item.filename, "bytes": item.file_size,
+            "compressed_bytes": item.compress_size, "crc32": f"{item.CRC:08x}",
+            "directory": item.is_dir(),
+        } for item in archive.infolist()]
+
+
+def read_outputs(path, manifest_suffix, diagnostic, allow_example_files=False):
+    diagnostic.update(archive_path=str(path), members=zip_inventory(path))
     with zipfile.ZipFile(path) as archive:
         infos = archive.infolist()
         names = [item.filename for item in infos]
@@ -108,13 +118,47 @@ def read_outputs(path, manifest_suffix):
             name for name in names
             if name == manifest_suffix or name.endswith("/" + manifest_suffix)
         ]
+        diagnostic["manifest_candidates"] = manifests
         need(len(manifests) == 1, "analysis_manifest_missing_or_ambiguous")
         prefix = manifests[0][:-len("analysis-manifest.json")]
-        selected = {
+        scoped = {
             item.filename[len(prefix):]: item for item in infos
             if item.filename.startswith(prefix) and not item.is_dir()
         }
-        need(set(selected) == EXPECTED, "analytical_output_file_set_mismatch")
+        missing = sorted(EXPECTED - set(scoped))
+        extras = sorted(set(scoped) - EXPECTED)
+        allowed = {
+            name for name in extras if allow_example_files and (
+                name == "selected-example-receipt.json"
+                or (name.startswith("selected-example/") and name.endswith(".json"))
+            )
+        }
+        diagnostic.update(
+            analytical_prefix=prefix,
+            expected_analytical_files=sorted(EXPECTED),
+            observed_analytical_files=sorted(EXPECTED & set(scoped)),
+            missing_analytical_files=missing,
+            extra_container_files=[{
+                "member": scoped[name].filename, "relative_name": name,
+                "bytes": scoped[name].file_size,
+                "compressed_bytes": scoped[name].compress_size,
+                "allowed_container_file": name in allowed,
+            } for name in extras],
+            unexpected_container_files=sorted(set(extras) - allowed),
+            outside_analytical_namespace=[
+                item.filename for item in infos
+                if not item.is_dir() and not item.filename.startswith(prefix)
+            ],
+            container_policy=(
+                "The pinned original workflow added selected-example/*.json and "
+                "selected-example-receipt.json after analytical manifest creation."
+                if allow_example_files else
+                "No additional files inside article-reaggregation are permitted."
+            ),
+        )
+        need(not missing, "analytical_output_missing")
+        need(set(extras) == allowed, "unexpected_container_file")
+        selected = {name: scoped[name] for name in EXPECTED}
         need(all(item.file_size <= MAX_MEMBER for item in selected.values()),
              "analytical_member_expansion_bound")
         need(sum(item.file_size for item in selected.values()) <= MAX_TOTAL,
@@ -201,7 +245,9 @@ def main():
         "new_reaggregation_executed": False,
         "new_models_executed": False,
         "new_measurements": False,
+        "archive_layouts": {"reference": {}, "reaggregation": {}},
     }
+    reference_path = destination / "original-analysis.zip"
     exit_code = 1
     try:
         need(os.environ.get("GITHUB_ACTIONS") == "true", "github_actions_required")
@@ -212,7 +258,6 @@ def main():
         budget = helper.DownloadBudget(budget_path)
         need(budget.value["maximum_archive_response_bytes"] == 6000000000,
              "shared_budget_receipt_limit_mismatch")
-        reference_path = destination / "original-analysis.zip"
         if reference_path.exists():
             verify_file(reference_path, REFERENCE)
             receipt["reference_reused"] = True
@@ -227,9 +272,12 @@ def main():
             receipt["reference_api_producer"] = producer
             receipt["reference_reused"] = False
         receipt["reference_zip_verified"] = verify_file(reference_path, REFERENCE)
-        original, original_locations = read_outputs(reference_path, "analysis-manifest.json")
+        original, original_locations = read_outputs(
+                reference_path, "analysis-manifest.json",
+                receipt["archive_layouts"]["reference"], allow_example_files=True)
         replay, replay_locations = read_outputs(
-                args.main_zip, "article-reaggregation/analysis-manifest.json")
+                args.main_zip, "article-reaggregation/analysis-manifest.json",
+                receipt["archive_layouts"]["reaggregation"])
         verify_outputs(original, REFERENCE)
         verify_outputs(replay, REPLAY)
         receipt["both_output_manifests_verified"] = True
@@ -311,6 +359,20 @@ def main():
             receipt["reason"] = str(error)
         # Library exception text may include signed URLs, so it is never recorded.
     finally:
+        # Even a pin/layout failure retains the observed central-directory names.
+        # These names are diagnostic data until the whole archive SHA is verified.
+        for label, path, verification in (
+                ("reference", reference_path, "reference_zip_verified"),
+                ("reaggregation", args.main_zip, "cached_main_zip_verified")):
+            layout = receipt["archive_layouts"][label]
+            layout["pinned_archive_sha256_verified"] = verification in receipt
+            if "members" not in layout:
+                layout["archive_path"] = str(path)
+                try:
+                    layout["members"] = zip_inventory(path)
+                except Exception as inventory_error:
+                    layout["inventory_status"] = "unavailable"
+                    layout["inventory_error_type"] = type(inventory_error).__name__
         write_json(destination / "comparison-receipt.json", receipt)
         print(json.dumps({
             "stage": "retained_reaggregation_comparison",
