@@ -82,8 +82,25 @@ def candidate(row, edge):
     protocol = identity.get('protocol')
     operation = identity.get('operation')
     if protocol == 'grpc':
-        observed = str(attrs.get('rpc.service', '')).strip('/') + '/' + str(attrs.get('rpc.method', '')).strip('/')
-        if observed != str(operation).strip('/'):
+        # Bering 66ca3af, inferDependencyOperation: child HTTP method/name
+        # precedes its rpc.method/messaging.operation. rpc.service is not joined.
+        observed = next((str(attrs[k]).strip() for k in
+                         ('http.request.method', 'http.method')
+                         if attrs.get(k) is not None and str(attrs[k]).strip()), '')
+        if observed:
+            observed = observed.upper()
+        else:
+            parts = str(row.get('name') or '').strip().split()
+            if len(parts) >= 2 and parts[0].upper() in {
+                    'GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'}:
+                observed = parts[0].upper()
+            else:
+                observed = next((str(attrs[k]).strip() for k in
+                                 ('rpc.method', 'messaging.operation')
+                                 if attrs.get(k) is not None and str(attrs[k]).strip()), '')
+        # Parent-only operation inference remains outside this strict selector.
+        # Its absence leaves a witness unresolved and never changes the graph.
+        if observed != str(operation or '').strip():
             return False
     elif protocol == 'http':
         method = attrs.get('http.request.method', attrs.get('http.method'))
@@ -91,10 +108,10 @@ def candidate(row, edge):
         if str(method).upper() != str(operation).upper() or urlsplit(str(route)).path != identity.get('route'):
             return False
     elif protocol == 'redis':
-        method = attrs.get('db.operation.name', attrs.get('db.operation'))
-        if method is None:
-            method = str(attrs.get('db.query.text', attrs.get('db.statement', ''))).split(' ', 1)[0]
-        if str(method).upper() != str(operation).upper():
+        method = next((str(attrs[k]).strip() for k in
+                       ('db.operation.name', 'db.operation')
+                       if attrs.get(k) is not None and str(attrs[k]).strip()), '')
+        if method != str(operation or '').strip():
             return False
     elif operation:
         return False  # Leave an unimplemented token matcher explicitly unresolved.
@@ -230,7 +247,7 @@ def extract_evidence(original, capture, evidence):
                         'wire_normalized_record': row, 'original_receiver_records': indexed,
                         'matching_trace_parent_records': matching_parents,
                         'raw_source_is_original_receiver': True,
-                        'wire_fragment_serialization': 'lossless protobuf JSON field projection; file bytes located by SHA and member',
+                        'wire_fragment_serialization': 'protobuf JSON field projection; file bytes located by SHA and member',
                         'checks': {'exact_trace_span_time_match_to_original_receiver': True,
                                    'edge_service_and_operation_match': True,
                                    'same_trace_parent_service_match': bool(matching_parents) if server else None},

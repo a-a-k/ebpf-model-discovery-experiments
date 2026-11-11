@@ -1,0 +1,72 @@
+name: Complete publication evidence from saved artifacts
+on:
+  push:
+    branches: [publication/evidence-followup-20261111]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+env:
+  PYTHONUNBUFFERED: '1'
+  GH_TOKEN: ${{ github.token }}
+jobs:
+  evidence:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: b913a5df7be680c5e6ede001d0f8eb6fb856a4ed
+          path: work/historical
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned-source readers
+        run: python -m pip install -e work/historical opentelemetry-proto
+      - name: Validate reader syntax
+        run: |
+          python -m py_compile \
+            scripts/replay-publication-example.py \
+            scripts/publication_edge_evidence.py \
+            scripts/extract-publication-edge-witnesses.py \
+            workflow/context_sidecar_audit.py \
+            scripts/compare-publication-reaggregation.py \
+            scripts/summarize-publication-evidence.py
+      - name: Extract source witnesses without model execution
+        run: |
+          python scripts/extract-publication-edge-witnesses.py \
+            --historical work/historical \
+            --work work/publication-evidence-work \
+            --out work/publication-evidence-output
+      - name: Inspect context evidence with bounded streaming
+        if: always()
+        run: |
+          python workflow/context_sidecar_audit.py \
+            --helper scripts/replay-publication-example.py \
+            --core work/publication-evidence-output/evidence/code-and-results.zip \
+            --work work/context-sidecars-followup \
+            --out work/publication-evidence-output
+      - name: Compare reproduced analytical outputs
+        if: always()
+        run: |
+          python scripts/compare-publication-reaggregation.py \
+            --main-zip work/publication-evidence-work/main-replay-output.zip \
+            --work work/publication-reaggregation-comparison \
+            --out work/publication-evidence-output
+      - name: Print bounded evidence report
+        id: summary
+        if: always()
+        run: python scripts/summarize-publication-evidence.py --out work/publication-evidence-output
+      - name: Preserve all completed and failed evidence checks
+        if: always() && steps.summary.outputs.artifact_size_ok == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: publication-evidence-followup-${{ github.run_id }}-attempt${{ github.run_attempt }}
+          path: work/publication-evidence-output/
+          compression-level: 6
+          if-no-files-found: error
+          retention-days: 90

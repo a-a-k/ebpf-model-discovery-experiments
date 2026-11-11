@@ -17,7 +17,11 @@ import os
 from pathlib import Path
 import resource
 import shutil
+import tarfile
 import time
+import zipfile
+
+import ijson
 
 
 MODEL_SOURCE = '76aebebfc11c68c2c6f4b916f715a833f548d9cc'
@@ -65,8 +69,7 @@ def load_helper(path):
 
 
 def selected_member(name):
-    if name in {'forecast-saved.json', 'status.json', 'closed-input.json',
-                'toolchain/forecasts.json', 'toolchain/context-baseline/forecasts.json'}:
+    if name in {'forecast-saved.json', 'closed-input.json'}:
         return True
     for variant in VARIANTS:
         if name == f'toolchain/discovery/combined/{variant}/observed.json':
@@ -74,10 +77,7 @@ def selected_member(name):
         prefix = f'toolchain/context-baseline/{variant}/'
         if name in {prefix + tail for tail in (
                 'union-proof.json', 'union-model.json', 'provenance.json',
-                'joint/canonical.json', 'joint/canonical.signal-quality.json')}:
-            return True
-        if name in {prefix + f'operations/{op}/{tail}'
-                    for op in OPS for tail in ('binding.json', 'forecast.json')}:
+                'joint/canonical.json')}:
             return True
     return False
 
@@ -109,6 +109,161 @@ def compact_evidence(row):
     }
 
 
+
+class HashingMember:
+    """Count/hash every byte returned to the incremental JSON reader."""
+    def __init__(self, stream):
+        self.stream = stream
+        self.bytes = 0
+        self.sha256 = hashlib.sha256()
+
+    def read(self, size=-1):
+        data = self.stream.read(size)
+        self.bytes += len(data)
+        self.sha256.update(data)
+        return data
+
+    def readinto(self, buffer):
+        data = self.read(len(buffer))
+        buffer[:len(data)] = data
+        return len(data)
+
+
+def stream_sidecar_selections(helper, archive_path, root, saved, seed, destination, retained_bytes):
+    """Verify full large members; retain separately labelled selected evidence."""
+    requests = {}
+    for variant in VARIANTS:
+        prefix = f'toolchain/context-baseline/{variant}/'
+        proof = helper.read(root / (prefix + 'union-proof.json'))
+        name = prefix + 'joint/canonical.signal-quality.json'
+        reference = proof['files']['joint_canonical_quality']
+        helper.require(reference.get('path', '').endswith('/' + name)
+                       or reference.get('path') == name,
+                       'streamed quality proof path differs')
+        helper.require(saved['sha256_by_path'].get(name) == reference.get('sha256'),
+                       'quality digest differs between frozen manifest and union proof')
+        requests[name] = {'kind': 'quality', 'variant': variant,
+                          'wanted': set(proof['added_edge_ids']),
+                          'expected_sha256': reference['sha256']}
+        for op in OPS:
+            for kind in ('binding', 'forecast'):
+                name = prefix + f'operations/{op}/{kind}.json'
+                expected_sha = saved['sha256_by_path'].get(name)
+                helper.require(isinstance(expected_sha, str) and len(expected_sha) == 64,
+                               'operation sidecar lacks an anchored freeze digest')
+                requests[name] = {'kind': kind, 'variant': variant, 'operation': op,
+                                  'expected_sha256': expected_sha}
+    results = {}
+    with zipfile.ZipFile(archive_path) as archive:
+        helper.require(archive.getinfo('model.tar.gz.json').file_size <= 80_000_000,
+                       'model inventory exceeds its prior bound')
+        inventory = json.loads(archive.read('model.tar.gz.json'))
+        for name, request in requests.items():
+            helper.require(name in inventory['files'], 'streamed member missing from pinned inventory')
+            item = inventory['files'][name]
+            helper.require(item['sha256'] == request['expected_sha256'],
+                           'streamed member inventory differs from anchored forecast')
+        # unpack_package already verified the entire ZIP and compressed TAR.
+        # This pass streams large quality/binding/forecast records without
+        # expanding the original members to disk.
+        with archive.open('model.tar.gz') as incoming, tarfile.open(fileobj=incoming, mode='r|gz') as tar:
+            for member in tar:
+                if member.name not in requests:
+                    continue
+                helper.require(member.name not in results, 'duplicate streamed sidecar member')
+                helper.require(member.isfile(), 'streamed sidecar member must be regular')
+                request, expected = requests[member.name], inventory['files'][member.name]
+                helper.require(member.size == expected['bytes'], 'streamed member byte count differs')
+                selected, seen_edge_ids = {}, set()
+                with tar.extractfile(member) as stream:
+                    counted = HashingMember(stream)
+                    if request['kind'] == 'quality':
+                        for row in ijson.items(counted, 'observation_evidence.item', use_float=True):
+                            if row.get('entity_type') != 'edge':
+                                continue
+                            edge_id = row['entity_id']
+                            helper.require(edge_id not in seen_edge_ids, 'duplicate edge-quality annotation')
+                            seen_edge_ids.add(edge_id)
+                            if edge_id in request['wanted']:
+                                selected[edge_id] = compact_evidence(row)
+                    else:
+                        # Nested binding provenance can be large; only these
+                        # exact top-level fields are needed by inspect_variant.
+                        required_edges_seen = False
+                        if request['kind'] == 'binding':
+                            selected['required_edges'] = []
+                        for prefix, event, value in ijson.parse(counted, use_float=True):
+                            if request['kind'] == 'binding':
+                                if prefix == 'available' and event == 'boolean':
+                                    helper.require('available' not in selected, 'duplicate binding available')
+                                    selected['available'] = value
+                                elif prefix == 'required_edges' and event == 'start_array':
+                                    helper.require(not required_edges_seen, 'duplicate required_edges array')
+                                    required_edges_seen = True
+                                elif prefix == 'required_edges.item' and event == 'string':
+                                    selected['required_edges'].append(value)
+                            elif prefix == 'prediction' and event in ('number', 'null'):
+                                helper.require('prediction' not in selected, 'duplicate forecast prediction')
+                                selected['prediction'] = value
+                        if request['kind'] == 'binding':
+                            helper.require('available' in selected and required_edges_seen,
+                                           'required binding fields missing from saved member')
+                        else:
+                            helper.require('prediction' in selected, 'saved forecast prediction missing')
+                    # Do not report verification of a selected prefix as
+                    # verification of the complete original TAR member.
+                    while counted.read(1024**2):
+                        pass
+                helper.require((counted.bytes, counted.sha256.hexdigest()) ==
+                               (expected['bytes'], expected['sha256']),
+                               'complete streamed sidecar bytes/SHA differ')
+                original = {'archive_member': member.name, 'bytes': counted.bytes,
+                            'sha256': counted.sha256.hexdigest(), 'whole_member_verified': True,
+                            'expanded_original_member_to_disk': False}
+                derived = {
+                    'schema': 'context-sidecar-selected-evidence-v2',
+                    'kind': 'derived_selection', 'is_original_archive_member': False,
+                    'source_member': original, 'repetition': seed, 'variant': request['variant'],
+                    'selected_member_kind': request['kind'],
+                    'selected_fields': selected, 'cross_source_pair_status': PAIR_STATUS,
+                }
+                if request['kind'] == 'quality':
+                    derived.update(
+                        selector='observation_evidence edge records matching saved added_edge_ids',
+                        projection='compact_evidence retains relation fields and first two source references',
+                        requested_edge_ids=sorted(request['wanted']),
+                        missing_annotation_edge_ids=sorted(request['wanted'] - set(selected)))
+                else:
+                    derived.update(operation=request['operation'],
+                                   selector='top-level available/required_edges or prediction only')
+                content = json.dumps(derived, ensure_ascii=False, indent=2) + '\n'
+                helper.require(retained_bytes + len(content.encode('utf-8')) <= MAX_SELECTED_BYTES,
+                               'original selected members plus derived selections exceed 512MiB')
+                suffix = '' if request['kind'] == 'quality' else '-' + request['operation']
+                filename = f"{request['kind']}-{request['variant']}{suffix}.selected.json"
+                path = destination / str(seed) / filename
+                helper.require(not path.exists(), 'derived context selection must not overwrite evidence')
+                helper.write(path, derived)
+                retained_bytes += path.stat().st_size
+                results[member.name] = {
+                    'variant': request['variant'], 'kind': request['kind'],
+                    'operation': request.get('operation'),
+                    'source_member': original, 'derived_selection': helper.reference(path),
+                    'selected_fields': selected,
+                }
+    helper.require(set(results) == set(requests), 'required streamed sidecar member missing')
+    by_variant = {variant: {'operations': {op: {} for op in OPS}} for variant in VARIANTS}
+    for row in results.values():
+        target = by_variant[row['variant']]
+        if row['kind'] == 'quality':
+            target['quality'] = row
+        else:
+            target['operations'][row['operation']][row['kind']] = row
+    references = [{key: value for key, value in row.items() if key != 'selected_fields'}
+                  for row in results.values()]
+    return by_variant, retained_bytes, references
+
+
 def anchored_reference(helper, root, reference, expected_name):
     path = root / expected_name
     helper.require(path.is_file(), 'required context member unavailable: ' + expected_name)
@@ -120,7 +275,7 @@ def anchored_reference(helper, root, reference, expected_name):
     return helper.reference(path)
 
 
-def inspect_variant(helper, root, seed, variant):
+def inspect_variant(helper, root, seed, variant, streamed_selections):
     prefix = f'toolchain/context-baseline/{variant}/'
     proof = helper.read(root / (prefix + 'union-proof.json'))
     references = {
@@ -130,7 +285,16 @@ def inspect_variant(helper, root, seed, variant):
         'joint_canonical_quality': prefix + 'joint/canonical.signal-quality.json',
     }
     verified_refs = {key: anchored_reference(helper, root, proof['files'][key], name)
-                     for key, name in references.items()}
+                     for key, name in references.items() if key != 'joint_canonical_quality'}
+    quality_selection = streamed_selections['quality']
+    quality_source = quality_selection['source_member']
+    helper.require(quality_source['archive_member'] == references['joint_canonical_quality'] and
+                   quality_source['sha256'] == proof['files']['joint_canonical_quality']['sha256'] and
+                   quality_source['whole_member_verified'],
+                   'streamed quality provenance differs from the union proof')
+    verified_refs['joint_canonical_quality'] = {
+        'source_member': quality_source, 'derived_selection': quality_selection['derived_selection']}
+
     base = helper.read(root / references['base_model'])
     joint = helper.read(root / references['joint_model'])
     union = helper.read(root / references['union_model'])
@@ -152,19 +316,18 @@ def inspect_variant(helper, root, seed, variant):
                    not proof.get('joint_alias_metadata_collisions'),
                    'saved union retains identity conflicts')
     service_ids = {s['id'] for s in base['services']}
-    quality = helper.read(root / references['joint_canonical_quality'])
-    annotations = [r for r in quality.get('observation_evidence', [])
-                   if r.get('entity_type') == 'edge']
-    evidence = {r['entity_id']: r for r in annotations}
-    helper.require(len(evidence) == len(annotations), 'duplicate edge-quality annotation')
+    evidence = quality_selection['selected_fields']
     provenance = helper.read(root / (prefix + 'provenance.json'))
     operations = {}
     for op in OPS:
-        folder = root / (prefix + 'operations/' + op)
-        binding, forecast = helper.read(folder / 'binding.json'), helper.read(folder / 'forecast.json')
+        records = streamed_selections['operations'][op]
+        binding, forecast = records['binding']['selected_fields'], records['forecast']['selected_fields']
         operations[op] = {'available': binding['available'],
                           'forecast': forecast.get('prediction'),
-                          'required_edges': binding.get('required_edges', [])}
+                          'required_edges': binding.get('required_edges', []),
+                          'verified_saved_field_sources': {
+                              kind: {key: row[key] for key in ('source_member', 'derived_selection')}
+                              for kind, row in records.items()}}
     rows = []
     for edge_id in recorded:
         edge = after[edge_id]
@@ -178,7 +341,7 @@ def inspect_variant(helper, root, seed, variant):
                      'endpoint_services_in_canonical_graph': True,
                      'required_by_operations': [op for op, row in operations.items()
                                                 if edge_id in row['required_edges']],
-                     'joint_quality_evidence': compact_evidence(evidence.get(edge_id))})
+                     'joint_quality_evidence': evidence.get(edge_id, compact_evidence(None))})
     return {
         'repetition': seed, 'variant': variant, 'status': 'verified_saved_union_edges',
         'verified_member_references': verified_refs, 'provenance_status': provenance.get('status'),
@@ -264,6 +427,7 @@ def main():
                'reader_execution': {k: os.environ.get(k) for k in
                                     ('GITHUB_SHA', 'GITHUB_RUN_ID', 'GITHUB_RUN_ATTEMPT', 'GITHUB_JOB')},
                'maximum_selected_member_bytes_per_case': MAX_SELECTED_BYTES,
+               'large_sidecar_reading': 'full-member streaming SHA; separately hashed derived quality/binding/forecast fields',
                'human_seconds': None, 'human_cost_status': 'unmeasured'}
     receipt_path = destination / 'context-sidecar-receipt.json'
     helper.write(receipt_path, receipt)
@@ -306,7 +470,13 @@ def main():
                     if name.startswith('toolchain/'):
                         helper.require(saved['sha256_by_path'].get(name) == helper.digest(target / name),
                                        'selected sidecar differs from the anchored forecast freeze')
-                variants = [inspect_variant(helper, target, seed, variant) for variant in VARIANTS]
+                streamed, retained_bytes, references = stream_sidecar_selections(
+                    helper, archive, target, saved, seed, destination,
+                    result['package']['selected_uncompressed_bytes'])
+                result['retained_original_and_derived_bytes'] = retained_bytes
+                result['streamed_sidecar_members'] = references
+                variants = [inspect_variant(helper, target, seed, variant, streamed[variant])
+                            for variant in VARIANTS]
                 encoded = json.dumps(variants, ensure_ascii=False).encode('utf-8')
                 helper.require(len(encoded) <= MAX_REPORT_BYTES, 'bounded context report exceeded')
                 result['variants'] = variants
