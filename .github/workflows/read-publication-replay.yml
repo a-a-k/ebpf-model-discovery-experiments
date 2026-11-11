@@ -1,0 +1,24 @@
+name: Read retained publication replay artifact
+
+on:
+  push:
+    branches:
+      - publication/read-replay-20261111
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Inspect the completed replay artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/read-publication-replay.py
