@@ -1,0 +1,98 @@
+{
+  "schema": "compact-publication-input-selection-v1",
+  "scope": "Pinned inputs for the bounded publication bundle: all published analytical case results and one optional real eBPF example. No full-study raw backup.",
+  "repo": "a-a-k/ebpf-model-discovery-experiments",
+  "source_head_of_known_code_tree": "66867873ab31592fd665813ec985274a50cca4e4",
+  "core": {
+    "repository_tree": {
+      "files": 225,
+      "bytes_before_compression": 31933948,
+      "includes": [
+        "results/literal-results.json",
+        "results/correction-publication.json",
+        "source code",
+        "pinned manifests",
+        "provenance and costs"
+      ],
+      "measurement": "Parent's git blob inventory at specified head"
+    },
+    "original_analytical_result": {
+      "path": "results/literal-results.json",
+      "size": 24903292,
+      "sha256": "1153f70032bc36bbc1936e666c8338e0935c24d2c8553b64836e711c9005bf36",
+      "url": "https://raw.githubusercontent.com/a-a-k/ebpf-model-discovery-experiments/66867873ab31592fd665813ec985274a50cca4e4/results/literal-results.json",
+      "included_in_tree": true
+    },
+    "corrected_summary": {
+      "id": 730603417,
+      "name": "prospective-results-attempt1.json",
+      "size": 10530719,
+      "sha256": "d772bd51c199397f5b5d2aaa623d255946cbaf6541b7955ab74a145eaac2a345",
+      "release_id": 440020384,
+      "release_tag": "compose-ack-correction-42769442057",
+      "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/download/compose-ack-correction-42769442057/prospective-results-attempt1.json"
+    },
+    "corrected_publication_report": {
+      "path": "results/correction-publication.json",
+      "size": 1853057,
+      "sha256": "d69134c8bf4bc617d3ab5fbe8146617277c7b62cd425801a9c9a8b3928b57f44",
+      "included_in_tree": true
+    },
+    "known_core_bytes_before_compressing_source_tree": 42464667
+  },
+  "optional_real_example": {
+    "key": [
+      "otel_demo",
+      "absent",
+      9,
+      "obi"
+    ],
+    "reason": "Smallest absent-mode eBPF training+model package pair with nonnull graph hashes and available forecasts in the saved results.",
+    "training": {
+      "id": 13565862245,
+      "name": "v6-isolated-training-slot3-42347357851-attempt1",
+      "size_in_bytes": 329226484,
+      "digest": "sha256:f910fb03380e6e7ad0c60c4f1e14e8fa7f1858dbcffba9eb37710ba3d9990efb",
+      "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13565862245/zip",
+      "expired": false,
+      "expires_at": "2027-02-05T06:31:02Z",
+      "run_id": 42347357851,
+      "source": "b913a5df7be680c5e6ede001d0f8eb6fb856a4ed"
+    },
+    "model": {
+      "id": 13567701925,
+      "name": "v6-isolated-model-slot3-42347357851-attempt1",
+      "size_in_bytes": 747216214,
+      "digest": "sha256:19099f3bdc275fc595c6e819ce010f1da1536152feca3069a1e5333f2389f662",
+      "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13567701925/zip",
+      "expired": false,
+      "expires_at": "2027-02-05T06:31:02Z",
+      "run_id": 42347357851,
+      "source": "b913a5df7be680c5e6ede001d0f8eb6fb856a4ed"
+    },
+    "pair_bytes": 1076442698,
+    "members": {
+      "training": [
+        "capture.tar.gz",
+        "capture.tar.gz.json"
+      ],
+      "model": [
+        "model.tar.gz",
+        "model.tar.gz.json"
+      ]
+    },
+    "forecast_manifest_sha256": "e820f17d4e670e5b0e22ab0c73f362ec7f991e8c3bec45f09c42386f0724f2b3",
+    "model_and_training_source_job_attempt": 1,
+    "source_training_job": "training3",
+    "availability": "Training and model verified live via run42347357851 artifacts API; not found by ID in the two partial full-input archive release asset lists. Use exact Actions IDs unless an independently verified permanent source is resolved.",
+    "core_plus_pair_before_compressing_source_tree_bytes": 1118907365
+  },
+  "limitations": [
+    "Core contains per-case/per-operation analytical outputs, not all original108 raw input closure.",
+    "Only chosen source-model pair may be reconstructed; scientific artifact processing must run in repository Actions.",
+    "Original target_latency contains aggregate count/min/p50/p90/max/mean, no per-request latency array.",
+    "Original literal-results and corrected prospective summary omit class_test_assignments and target_descriptive_assignments; per-attempt classification reconstruction is outside the core.",
+    "Full original evaluation arrays remain in original metadata ZIPs; corrected full classes are in raw capture classes-v5.json. Those inputs are deliberately not selected for the core.",
+    "Input package bytes are compressed sizes recorded by GitHub; source tree size is before compression, so final archive size is not yet measured."
+  ]
+}

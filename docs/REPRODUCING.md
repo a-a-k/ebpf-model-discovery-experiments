@@ -4,6 +4,63 @@ The protocol defines the matrix, allocation, workloads, sources, baselines and
 external outcomes. Application READMEs describe the pinned deployments and their
 SDK controls and independent outcome checks.
 
+## Compact publication package
+
+Use `compact-publication.yml` to prepare the files for one ordinary Zenodo
+deposit. The core contains the complete tracked source tree, protocols,
+configuration, published case-level analytical results, provenance and costs,
+plus the exact corrected Social Network summary. The optional worked example
+contains the original training and frozen-model packages for OTel Demo with
+SDK tracing absent, repetition 9, and OBI.
+
+The [input selection](compact-publication-inputs.json) fixes the identifiers,
+byte counts and SHA-256 values before any download. At the recorded source
+revision, the core inputs total 42,464,667 bytes before compressing the source
+tree; the two existing compressed example inputs total 1,076,442,698 bytes.
+The builder enforces a 100 MB core-input budget and a 2 GB total budget. It
+does not enumerate historical runs or download other case archives.
+
+Run the packaging workflow at the reviewed source ref:
+
+```sh
+gh workflow run compact-publication.yml --repo a-a-k/ebpf-model-discovery-experiments \
+  --ref publication/minimal-reproduction-20261111 -f include_example=true
+```
+
+Download the workflow's `compact-publication-RUN_ID` artifact. Its checksummed
+files are the deposit: `code-and-results.zip`, optionally `worked-example.zip`,
+and the generated manifest. The build runs in Actions; the entire historical
+dataset is never downloaded to the researcher's computer. The manifest records
+the actual packaged source revision, sizes and hashes. A successful build is
+evidence of packaging and analytical consistency, not a new acquisition run.
+
+The core preserves all 108 historical cases and all 36 corrected Social Network
+cases, including unavailable forecasts, adverse outcomes and unknown values.
+The final analysis uses the original 72 Petclinic/OTel cases with the corrected
+36 Social Network cases. The historical Social Network results retain their
+superseded contract interpretation and are not additional repetitions.
+
+The packaged data contain operation-level counts and forecasts. They support
+re-aggregation of published analytical results. The verifier recomputes the
+corrected summary statistics in an isolated interpreter and compares them with the fixed
+publication report from the packaged files, without downloading other archives.
+Individual request durations and the two omitted classification-assignment
+arrays are not in these analytical JSON files. Recomputing latency quantiles
+or ARI from individual attempts is outside the core's scope.
+
+The worked example was selected as a small absent-SDK case with observed eBPF
+graphs and available forecasts. It is an execution example, not a representative
+statistical subsample. Its original raw inputs and frozen outputs are retained
+without changing their identities. Packaging verifies their byte counts,
+SHA-256 and archive integrity; it does not itself rebuild that model. A later
+model-rebuild check must report its actual execution separately. The small
+artifact does not claim historical raw-input replay of all 108 cases.
+
+The existing implementation checks still build the pinned modeling tools and
+exercise the discovery and contract fixtures. New acquisition remains a
+separate operation described below. Large working archives are optional
+historical evidence and are not a prerequisite for this publication package.
+
 ## Published results
 
 ### Corrected Social Network evaluation
@@ -93,43 +150,13 @@ This is reproduction of the published report from original metadata. It does
 not archive the complete raw-capture/model-build input closure or demonstrate
 rebuilding all models from scratch.
 
-### Permanent full-input archive
+### Historical bulk archive
 
-The complete input archive is published separately from the fixed report
-archive. Its `full-input-index.json` records every resolved dependency of the
-108 canonical cases, including original artifact identity, producing run/job
-/attempt, source commit, Release asset/part identity, byte offsets and
-SHA-256. The index is authoritative by its asset ID and hash; `latest` is not
-used.
-
-Create or resume the archive (all large processing runs in Actions):
-
-```sh
-gh workflow run full-input-archive.yml --repo a-a-k/ebpf-model-discovery-experiments \
-  --ref archive/full-study-inputs -f mode=create
-```
-
-After the finalizer publishes the exact index asset, run the three-way
-verification workflow with the index asset ID, byte count and SHA-256, plus
-the fixed publication index identity above:
-
-```sh
-gh workflow run full-input-verification.yml \
-  --repo a-a-k/ebpf-model-discovery-experiments --ref archive/full-study-inputs \
-  -f index_id=INDEX_ASSET_ID -f index_bytes=INDEX_BYTES -f index_sha256=INDEX_SHA256 \
-  -f publication_index_asset_id=728317527 \
-  -f publication_index_bytes=213141 \
-  -f publication_index_sha256=d5294d00a5944789b2743ae1567cc7a9b4833af4069c1012e2953805541cd277
-```
-
-The verification workflow reads the full archive through `package_import`
-without Actions artifact downloads or historical Actions API requests, then
-replays all 108 published cases and the existing 36-case Social Network
-correction. Its receipts report the actual Release assets read and the
-forbidden-source request count, which must be zero. The archive worker uses
-lossless one-GiB parts, verifies every original ZIP and nested package, and
-records transfer retries and worker costs separately from the historical
-experiment.
+The earlier full-input transfer created unsealed, partial Releases. No completed
+full-input closure is asserted here. Its already uploaded files, original
+identities and receipts are preserved. Completing or copying that bulk archive
+is outside the compact publication task; its source remains available for
+historical inspection. Use the bounded workflow above for the Zenodo package.
 
 ### Original Actions publications
 
