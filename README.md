@@ -56,6 +56,13 @@ The [reproduction guide](docs/REPRODUCING.md) describes acquisition and report
 generation; the [context baseline](docs/CONTEXT_BASELINE.md) specifies the
 observed-edge union.
 
+The [compact publication workflow](.github/workflows/compact-publication.yml)
+packages the source and analytical results of every case, with an optional
+single real eBPF input/model example. It has a 2 GB total budget and does not
+copy the full historical raw archive. The
+[reproduction guide](docs/REPRODUCING.md#compact-publication-package) states the
+included checks and the limits of the compact data.
+
 ## Code and execution
 
 - [Study lifecycle](src/ebpf_discovery/study_v6.py): fresh capture, offline model
